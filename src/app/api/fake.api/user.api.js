@@ -1,4 +1,7 @@
 import { professionsObject as professions } from "./professions.api";
+import React from "react";
+
+import { Link } from "react-router-dom";
 const qualities = {
     tedious: {
         _id: "67rdca3eeb7f6fgeed471198",
@@ -35,7 +38,7 @@ const qualities = {
 const users = [
     {
         _id: "67rdca3eeb7f6fgeed471815",
-        name: "Джон Дориан",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471815"> Джон Дориан</Link>,
         profession: professions.doctor,
         qualities: [qualities.tedious, qualities.uncertain, qualities.strange],
         completedMeetings: 36,
@@ -44,7 +47,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471816",
-        name: "Кокс",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471816"> Кокс</Link>,
         profession: professions.doctor,
         qualities: [qualities.buller, qualities.handsome, qualities.alcoholic],
         completedMeetings: 15,
@@ -53,7 +56,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471817",
-        name: "Боб Келсо",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471817"> Боб Келсо</Link>,
         profession: professions.doctor,
         qualities: [qualities.buller],
         completedMeetings: 247,
@@ -62,7 +65,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471818",
-        name: "Рэйчел Грин",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471818"> Рэйчел Грин</Link>,
         profession: professions.waiter,
         qualities: [qualities.uncertain],
         completedMeetings: 148,
@@ -71,7 +74,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471819",
-        name: "Шелдон Купер",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471819"> Шелдон Купер</Link>,
         profession: professions.physics,
         qualities: [qualities.strange, qualities.tedious],
         completedMeetings: 37,
@@ -80,7 +83,9 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471820",
-        name: "Леонард Хофстедтер",
+        name: (
+            <Link to="/users/67rdca3eeb7f6fgeed471820">Леонард Хофстедтер</Link>
+        ),
         profession: professions.physics,
         qualities: [qualities.strange, qualities.uncertain],
         completedMeetings: 147,
@@ -89,7 +94,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471821",
-        name: "Говард Воловиц",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471821"> Говард Воловиц</Link>,
         profession: professions.engineer,
         qualities: [qualities.strange, qualities.tedious],
         completedMeetings: 72,
@@ -98,7 +103,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471822",
-        name: "Никола Тесла",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471822"> Никола Тесла</Link>,
         profession: professions.engineer,
         qualities: [qualities.handsome],
         completedMeetings: 72,
@@ -107,7 +112,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471823",
-        name: "Моника Геллер",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471823"> Моника Геллер</Link>,
         profession: professions.cook,
         qualities: [qualities.strange, qualities.uncertain],
         completedMeetings: 17,
@@ -116,7 +121,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed471824",
-        name: "Рататуй",
+        name: <Link to="/users/67rdca3eeb7f6fgeed471824"> Рататуй</Link>,
         profession: professions.cook,
         qualities: [qualities.handsome, qualities.buller],
         completedMeetings: 17,
@@ -125,7 +130,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed47181f",
-        name: "Джоуи Триббиани",
+        name: <Link to="/users/67rdca3eeb7f6fgeed47181f">Джоуи Триббиани</Link>,
         profession: professions.actor,
         qualities: [qualities.uncertain, qualities.strange],
         completedMeetings: 434,
@@ -134,7 +139,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed47181r",
-        name: "Брэд Питт",
+        name: <Link to="/users/67rdca3eeb7f6fgeed47181r">Брэд Питт</Link>,
         profession: professions.actor,
         qualities: [qualities.handsome],
         completedMeetings: 434,
@@ -150,6 +155,14 @@ const fetchAll = () =>
         }, 2000);
     });
 
+const getById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(users.find((user) => user._id === id));
+        }, 1000);
+    });
+
 export default {
-    fetchAll
+    fetchAll,
+    getById
 };

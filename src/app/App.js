@@ -14,13 +14,13 @@ function App() {
         <div>
             <NavBar />
             <Switch>
-                <Route path="/" exact component={Main} />
+                <Route path="/users" component={Users} />
+                <Route path="/" component={Main} />
                 <Route
                     path="/users/:userId"
                     exact
                     render={() => <UserPage user={user} />}
                 />
-                <Route path="/users" exact component={Users} />
                 <Route path="/login" component={Login} />
             </Switch>
         </div>

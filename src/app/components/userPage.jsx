@@ -1,51 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../api";
-import Quality from "./quality";
+import QualitiesList from "./qualitiesList";
+import { useHistory } from "react-router-dom";
 
-const UserPage = () => {
-    const [user, setUser] = useState();
+const UserPage = ({ userId }) => {
     const history = useHistory();
-    const params = useParams();
-    const { userId } = params;
-
+    const [user, setUser] = useState();
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
-    }, []);
-
-    const renderAllUsers = () => {
-        history.replace("/users");
+    });
+    const handleClick = () => {
+        history.push("/users");
     };
-    return (
-        <>
-            {/* eslint-disable */}
-            {user ? (
-                <div className="m-3">
-                    <h1 className="mt-3 mb-3">{user?.name?.props?.children}</h1>
-                    <h2 className="mt-2 mb-2">
-                        {"Профессия: " + user.profession.name}
-                    </h2>
-                    {user.qualities.map((qual) => (
-                        <Quality key={qual._id} {...qual} />
-                    ))}
-                    <h5 className="mb-4">
-                        {"CompletedMeetengs: " + user.completedMeetings}
-                    </h5>
-                    <h3>{"Rate: " + user.rate}</h3>
-                    <button onClick={() => renderAllUsers()}>
-                        Все пользователи
-                    </button>
-                </div>
-            ) : (
-                <h1> Loading...</h1>
-            )}
-            {/* eslint-enable */}
-        </>
-    );
+    if (user) {
+        return (
+            <div>
+                <h1> {user.name}</h1>
+                <h2>Профессия: {user.profession.name}</h2>
+                <QualitiesList qualities={user.qualities} />
+                <p>completedMeetings: {user.completedMeetings}</p>
+                <h2>Rate: {user.rate}</h2>
+                <button onClick={handleClick}> Все Пользователи</button>
+            </div>
+        );
+    } else {
+        return <h1>Loading</h1>;
+    }
 };
+
 UserPage.propTypes = {
-    user: PropTypes.object
+    userId: PropTypes.string.isRequired
 };
 
 export default UserPage;

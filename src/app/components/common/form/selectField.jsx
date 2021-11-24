@@ -31,12 +31,13 @@ const SelectField = ({ label, onChange, defaultOption, options, error }) => {
                 onChange={handleChange}
             >
                 <option disabled value={defaultOption}>
-                    {optionsArray &&
-                        [
-                            optionsArray.find((option) => {
-                                return option.value === defaultOption;
-                            })
-                        ][0].name}
+                    {optionsArray && defaultOption !== "Choose..."
+                        ? [
+                              optionsArray.find((option) => {
+                                  return option.value === defaultOption;
+                              })
+                          ][0].name
+                        : "Choose..."}
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (

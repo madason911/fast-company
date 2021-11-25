@@ -1,13 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SelectField = ({ label, onChange, defaultOption, options, error }) => {
-    const getInputClasses = () => {
-        return "form-select " + (error ? "is-invalid" : "");
-    };
-
+const RegisterSelector = ({
+    label,
+    value,
+    onChange,
+    defaultOption,
+    options,
+    error
+}) => {
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
+    };
+    const getInputClasses = () => {
+        return "form-select" + (error ? " is-invalid" : "");
     };
 
     const optionsArray =
@@ -27,16 +33,11 @@ const SelectField = ({ label, onChange, defaultOption, options, error }) => {
                 className={getInputClasses()}
                 id="validationCustom04"
                 name="profession"
-                value={defaultOption}
+                value={value}
                 onChange={handleChange}
             >
-                <option disabled value={defaultOption}>
-                    {optionsArray &&
-                        [
-                            optionsArray.find((option) => {
-                                return option.value === defaultOption;
-                            })
-                        ][0].name}
+                <option disabled value="">
+                    {defaultOption}
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (
@@ -49,17 +50,13 @@ const SelectField = ({ label, onChange, defaultOption, options, error }) => {
         </div>
     );
 };
-
-SelectField.propTypes = {
-    defaultOption: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.array,
-        PropTypes.string
-    ]),
+RegisterSelector.propTypes = {
+    defaultOption: PropTypes.string,
     label: PropTypes.string,
+    value: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
-export default SelectField;
+export default RegisterSelector;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
-import SelectField from "../common/form/selectField";
+import RegisterSelector from "../common/form/registerSelector";
 import api from "../../api";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
@@ -97,7 +97,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 error={errors.password}
             />
-            <SelectField
+            <RegisterSelector
                 onChange={handleChange}
                 options={professions}
                 defaultOption="Choose..."

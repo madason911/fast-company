@@ -4,7 +4,7 @@ const comments = [
         userId: "67rdca3eeb7f6fgeed471815",
         pageId: "67rdca3eeb7f6fgeed471815",
         content: "Lorem ipsum dolor",
-        created_at: "1533576399367"
+        created_at: "1633576399367"
     },
     {
         _id: "67rdca3eeb7f6fgdasd",
@@ -47,10 +47,9 @@ const add = (data) =>
             const comments = JSON.parse(localStorage.getItem("comments"));
             const newComment = {
                 ...data,
-                created_at: String(Date.now()),
+                created_at: Date.now(),
                 _id: Math.random().toString(36).substr(2, 9)
             };
-            console.log(newComment, data);
             comments.push(newComment);
             localStorage.setItem("comments", JSON.stringify(comments));
             resolve(newComment);

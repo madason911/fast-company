@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import api from "../../../api";
-import { getDateFormat } from "../../../utils/dateFormat";
-
+import { displayDate } from "../../../utils/displayDate";
+import API from "../../../api";
 const Comment = ({
-    publishedTime,
-    commentText,
+    content,
+    created_at: created,
+    _id: id,
     userId,
-    onDelete,
-    commentId
+    onRemove
 }) => {
     const [user, setUser] = useState();
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-        api.users.getById(userId).then((data) => setUser(data));
+        setIsLoading(true);
+        API.users.getById(userId).then((data) => {
+            setUser(data);
+            setIsLoading(false);
+        });
     }, []);
 
-    if (user) {
-        return (
-            <div className="bg-light card-body  mb-3">
-                <div className="row">
+    return (
+        <div className="bg-light card-body  mb-3">
+            <div className="row">
+                {isLoading ? (
+                    "Loading ..."
+                ) : (
                     <div className="col">
                         <div className="d-flex flex-start ">
                             <img
@@ -36,36 +42,35 @@ const Comment = ({
                                 <div className="mb-4">
                                     <div className="d-flex justify-content-between align-items-center">
                                         <p className="mb-1 ">
-                                            {user.name}
+                                            {user && user.name}{" "}
                                             <span className="small">
-                                                {getDateFormat(publishedTime)}
+                                                - {displayDate(created)}
                                             </span>
                                         </p>
                                         <button
                                             className="btn btn-sm text-primary d-flex align-items-center"
-                                            onClick={() => onDelete(commentId)}
+                                            onClick={() => onRemove(id)}
                                         >
                                             <i className="bi bi-x-lg"></i>
                                         </button>
                                     </div>
-                                    <p className="small mb-0">{commentText}</p>
+                                    <p className="small mb-0">{content}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
-        );
-    } else {
-        return <h1>...</h1>;
-    }
+        </div>
+    );
 };
 Comment.propTypes = {
-    publishedTime: PropTypes.string,
-    commentText: PropTypes.string,
+    content: PropTypes.string,
+    edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    created_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     userId: PropTypes.string,
-    commentId: PropTypes.string,
-    onDelete: PropTypes.func
+    onRemove: PropTypes.func,
+    _id: PropTypes.string
 };
 
 export default Comment;

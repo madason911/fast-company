@@ -1,23 +1,18 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import professionService from "../services/profession.service";
 import { toast } from "react-toastify";
 
-const ProdessionContext = React.createContext();
+const ProfessionContext = React.createContext();
 
 export const useProfessions = () => {
-    return useContext(ProdessionContext);
+    return useContext(ProfessionContext);
 };
 
-export const ProdessionProvider = ({ children }) => {
-    const [professions, setProfessions] = useState([]);
+export const ProfessionProvider = ({ children }) => {
     const [isLoading, setLoading] = useState(true);
+    const [professions, setProfessions] = useState([]);
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-        getProfessionsList();
-    }, []);
-
     useEffect(() => {
         if (error !== null) {
             toast(error);
@@ -25,6 +20,13 @@ export const ProdessionProvider = ({ children }) => {
         }
     }, [error]);
 
+    useEffect(() => {
+        getProfessionsList();
+    }, []);
+    function errorCatcher(error) {
+        const { message } = error.response.data;
+        setError(message);
+    }
     function getProfession(id) {
         return professions.find((p) => p._id === id);
     }
@@ -38,22 +40,17 @@ export const ProdessionProvider = ({ children }) => {
             errorCatcher(error);
         }
     }
-    function errorCatcher(error) {
-        const { message } = error.response.data;
-        setError(message);
-        setLoading(false);
-    }
 
     return (
-        <ProdessionContext.Provider
+        <ProfessionContext.Provider
             value={{ isLoading, professions, getProfession }}
         >
             {children}
-        </ProdessionContext.Provider>
+        </ProfessionContext.Provider>
     );
 };
 
-ProdessionProvider.propTypes = {
+ProfessionProvider.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node

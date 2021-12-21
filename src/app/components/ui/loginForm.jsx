@@ -59,6 +59,7 @@ const LoginForm = () => {
     const isValid = Object.keys(errors).length === 0;
 
     const handleSubmit = async (e) => {
+        let currError = {};
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -68,10 +69,13 @@ const LoginForm = () => {
             await signIn(data);
         } catch (error) {
             console.log(error);
+            currError = error;
             setErrors(error);
         }
 
-        history.push("/");
+        if (Object.keys(currError).length === 0) {
+            history.push("/");
+        }
     };
     return (
         <form onSubmit={handleSubmit}>

@@ -74,7 +74,12 @@ const LoginForm = () => {
         }
 
         if (Object.keys(currError).length === 0) {
-            history.push("/");
+            // console.log(history.location.state.from.pathname);
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         }
     };
     return (

@@ -1,57 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { validator } from "../../../utils/validator";
-import api from "../../../api";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radio.Field";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
+import { useQualities } from "../../../hooks/useQualities";
+import { useProfessions } from "../../../hooks/useProfession";
+import { useUser } from "../../../hooks/useUsers";
+import { useAuth } from "../../../hooks/useAuth";
 
 const EditUserPage = () => {
     const { userId } = useParams();
+    const { updateUser } = useAuth();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({
         email: "",
         password: "",
+        name: "",
         profession: "",
         sex: "male",
         qualities: []
     });
-    const [professions, setProfession] = useState([]);
-    const [qualities, setQualities] = useState({});
+
+    const { professions } = useProfessions();
+    const { qualities } = useQualities();
+    const { getUserById } = useUser();
     const [errors, setErrors] = useState({});
-    const getProfessionById = (id) => {
-        for (const prof in professions) {
-            const profData = professions[prof];
-            if (profData._id === id) return profData;
-        }
-    };
-    const getQualities = (elements) => {
-        const qualitiesQrray = [];
+    const currentUser = getUserById(userId);
+
+    const getQualitiesId = (elements) => {
+        const qualitiesId = [];
         for (const elem of elements) {
             for (const qualy in qualities) {
                 if (elem.value === qualities[qualy]._id) {
-                    qualitiesQrray.push(qualities[qualy]);
+                    qualitiesId.push(elem.value);
                 }
             }
         }
-        return qualitiesQrray;
+        return qualitiesId;
+    };
+
+    const getQualities = (elements) => {
+        const qualitiesArray = [];
+        for (const elem of elements) {
+            for (const qualy in qualities) {
+                if (elem === qualities[qualy]._id) {
+                    qualitiesArray.push(qualities[qualy]);
+                }
+            }
+        }
+        return qualitiesArray;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        const { profession, qualities } = data;
-        api.users
-            .update(userId, {
-                ...data,
-                profession: getProfessionById(profession),
-                qualities: getQualities(qualities)
-            })
-            .then((data) => history.push(`/users/${data._id}`));
+        const { qualities } = data;
+        updateUser({ ...data, qualities: getQualitiesId(qualities) });
+        history.push(`/users/${data._id}`);
         console.log(data);
     };
     const transformData = (data) => {
@@ -59,16 +69,13 @@ const EditUserPage = () => {
     };
     useEffect(() => {
         setIsLoading(true);
-        api.users.getById(userId).then(({ profession, qualities, ...data }) =>
-            setData((prevState) => ({
-                ...prevState,
-                ...data,
-                qualities: transformData(qualities),
-                profession: profession._id
-            }))
-        );
-        api.qualities.fetchAll().then((data) => setQualities(data));
-        api.professions.fetchAll().then((data) => setProfession(data));
+        const qualitiesArray = getQualities(currentUser.qualities);
+        setData((prevState) => ({
+            ...prevState,
+            ...currentUser,
+            qualities: transformData(qualitiesArray),
+            profession: currentUser.profession
+        }));
     }, []);
     useEffect(() => {
         if (data._id) setIsLoading(false);
@@ -108,7 +115,7 @@ const EditUserPage = () => {
             <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
-                    {!isLoading && Object.keys(professions).length > 0 ? (
+                    {!isLoading ? (
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 label="Имя"

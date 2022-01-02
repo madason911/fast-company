@@ -51,6 +51,31 @@ const AuthProvider = ({ children }) => {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    async function updateUser(payload) {
+        try {
+            await userService.create(payload);
+            await getUserData();
+        } catch (error) {
+            const { code, message } = error.response.data.error;
+            errorCatcher(error);
+            console.log(code, message);
+            if (code === 400) {
+                if (message === "EMAIL_NOT_FOUND") {
+                    const errorObject = {
+                        email: "Пользователя с таким Email не найдено!"
+                    };
+                    throw errorObject;
+                }
+                if (message === "INVALID_PASSWORD") {
+                    const errorObject = {
+                        password: "Неправильный ввод пароля!"
+                    };
+                    throw errorObject;
+                }
+            }
+        }
+    }
+
     async function signUp({ email, password, ...rest }) {
         const url =
             "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
@@ -146,7 +171,13 @@ const AuthProvider = ({ children }) => {
     }
     return (
         <AuthContext.Provider
-            value={{ signUp, currentUser: currentUser, signIn, logOut }}
+            value={{
+                signUp,
+                currentUser: currentUser,
+                signIn,
+                logOut,
+                updateUser
+            }}
         >
             {!isLoading ? children : "Loading..."}
         </AuthContext.Provider>

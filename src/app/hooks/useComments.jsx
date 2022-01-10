@@ -13,28 +13,14 @@ export const useComments = () => {
 };
 
 export const CommentsProvider = ({ children }) => {
+    const { userId } = useParams();
+    const { currentUser } = useAuth();
     const [isLoading, setLoading] = useState(true);
     const [comments, setComments] = useState([]);
     const [error, setError] = useState(null);
-
-    const { userId } = useParams();
-    const { currentUser } = useAuth();
-
     useEffect(() => {
         getComments();
     }, [userId]);
-
-    async function getComments() {
-        try {
-            const { content } = await commentService.getComments(userId);
-            setComments(content);
-        } catch (err) {
-            errorCatcher(err);
-        } finally {
-            setLoading(false);
-        }
-    }
-
     async function createComment(data) {
         const comment = {
             ...data,
@@ -43,19 +29,31 @@ export const CommentsProvider = ({ children }) => {
             created_at: Date.now(),
             userId: currentUser._id
         };
-        console.log(comment);
         try {
-            const { content } = await commentService.create(comment);
+            const { content } = await commentService.createComment(comment);
             setComments((prevState) => [...prevState, content]);
         } catch (error) {
             errorCatcher(error);
         }
+        console.log(comment);
     }
-
+    async function getComments() {
+        try {
+            const { content } = await commentService.getComments(userId);
+            setComments(content);
+        } catch (error) {
+            errorCatcher(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    function errorCatcher(error) {
+        const { message } = error.response.data;
+        setError(message);
+    }
     async function removeComment(id) {
         try {
             const { content } = await commentService.removeComment(id);
-
             if (content === null) {
                 setComments((prevState) =>
                     prevState.filter((c) => c._id !== id)
@@ -65,17 +63,12 @@ export const CommentsProvider = ({ children }) => {
             errorCatcher(error);
         }
     }
-
     useEffect(() => {
         if (error !== null) {
             toast(error);
             setError(null);
         }
     }, [error]);
-    function errorCatcher(error) {
-        const { message } = error.response.data;
-        setError(message);
-    }
     return (
         <CommentsContext.Provider
             value={{ comments, createComment, isLoading, removeComment }}

@@ -10,7 +10,6 @@ const SelectField = ({
     error,
     name
 }) => {
-    console.log(options, value);
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
@@ -21,17 +20,10 @@ const SelectField = ({
     const optionsArray =
         !Array.isArray(options) && typeof options === "object"
             ? Object.keys(options).map((optionName) => ({
-                  label: options[optionName].name,
+                  name: options[optionName].name,
                   value: options[optionName]._id
               }))
             : options;
-
-    const newArray = Array.isArray(optionsArray)
-        ? optionsArray.map((optionName) => ({
-              label: optionName.name,
-              value: optionName._id
-          }))
-        : options;
 
     return (
         <div className="mb-4">
@@ -48,8 +40,8 @@ const SelectField = ({
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {newArray &&
-                    newArray.map((option) => (
+                {optionsArray &&
+                    optionsArray.map((option) => (
                         <option value={option.value} key={option.value}>
                             {option.label}
                         </option>

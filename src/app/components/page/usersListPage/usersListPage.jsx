@@ -7,12 +7,17 @@ import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
 import { useUser } from "../../../hooks/useUsers";
-import { useProfessions } from "../../../hooks/useProfession";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions";
 const UsersListPage = () => {
     const { users } = useUser();
-    const { professions, isLoading: professionsLoading } = useProfessions();
     const { currentUser } = useAuth();
+    const professions = useSelector(getProfessions());
+    const professionsLoading = useSelector(getProfessionsLoadingStatus());
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
@@ -30,6 +35,7 @@ const UsersListPage = () => {
             }
             return user;
         });
+        // setUsers(newArray);
         console.log(newArray);
     };
 
@@ -68,12 +74,9 @@ const UsersListPage = () => {
                       JSON.stringify(selectedProf)
               )
             : data;
-
         return filteredUsers.filter((u) => u._id !== currentUser._id);
     }
-
     const filteredUsers = filterUsers(users);
-
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);

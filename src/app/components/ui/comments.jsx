@@ -5,10 +5,11 @@ import { useComments } from "../../hooks/useComments";
 
 const Comments = () => {
     const { createComment, comments, removeComment } = useComments();
+
     const handleSubmit = (data) => {
         createComment(data);
         // api.comments
-        //     .add({ ...data, pageId: userId })
+        //     .add({ ...data, pageId: userId, })
         //     .then((data) => setComments([...comments, data]));
     };
     const handleRemoveComment = (id) => {

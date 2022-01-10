@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-
-const NavbarProfile = () => {
+const NavProfile = () => {
     const { currentUser } = useAuth();
     const [isOpen, setOpen] = useState(false);
     const toggleMenu = () => {
@@ -26,7 +25,7 @@ const NavbarProfile = () => {
                 >
                     Profile
                 </Link>
-                <Link to={"/logout"} className="dropdown-item">
+                <Link to="/logout" className="dropdown-item">
                     Log Out
                 </Link>
             </div>
@@ -34,4 +33,4 @@ const NavbarProfile = () => {
     );
 };
 
-export default NavbarProfile;
+export default NavProfile;

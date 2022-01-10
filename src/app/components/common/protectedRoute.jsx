@@ -1,8 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import PropTypes from "prop-types";
-
+import { useAuth } from "../../hooks/useAuth";
 const ProtectedRoute = ({ component: Component, children, ...rest }) => {
     const { currentUser } = useAuth();
     return (

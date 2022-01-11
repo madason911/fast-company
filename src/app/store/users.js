@@ -57,11 +57,9 @@ const usersSlice = createSlice({
             state.dataLoaded = false;
         },
         userUpdated: (state, action) => {
-            for (let i = 0; i < state.entities.length; i++) {
-                if (state.entities[i] === action.payload._id) {
-                    state.entities[i] = action.payload;
-                }
-            }
+            state.entities[
+                state.entities.findIndex((u) => u._id === action.payload._id)
+            ] = action.payload;
         },
         authRequested: (state) => {
             state.error = null;

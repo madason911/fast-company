@@ -15,7 +15,6 @@ const commentsSlice = createSlice({
         },
         commentsReceved: (state, action) => {
             state.entities = action.payload;
-            state.lastFetch = Date.now();
             state.isLoading = false;
         },
         commentsRequestFailed: (state, action) => {
@@ -23,8 +22,9 @@ const commentsSlice = createSlice({
             state.isLoading = false;
         },
         commentRemoved: (state, action) => {
-            state.entities.filter(
-                (comment) => comment._id !== action.payload._id
+            state.entities.splice(
+                state.entities.findIndex((c) => c._id === action.payload._id),
+                1
             );
         },
         commentCreated: (state, action) => {

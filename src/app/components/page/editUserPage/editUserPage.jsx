@@ -36,7 +36,7 @@ const EditUserPage = () => {
 
     const [errors, setErrors] = useState({});
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;

@@ -1,7 +1,6 @@
 import { orderBy } from "lodash";
 import React, { useEffect } from "react";
 import CommentsList, { AddCommentForm } from "../common/comments";
-// import { useComments } from "../../hooks/useComments";
 import {
     createComment,
     getComments,
@@ -16,7 +15,6 @@ import { getCurrentUserId } from "../../store/users";
 const Comments = () => {
     const { userId } = useParams();
     const currentUserId = useSelector(getCurrentUserId());
-    // const { createComment } = useComments();
     const dispatch = useDispatch();
     const isLoading = useSelector(getCommentsLoadingStatus());
     const comments = useSelector(getComments());

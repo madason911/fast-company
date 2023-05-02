@@ -23,10 +23,10 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     };
 
     return (
-        <thead>
-            <tr>
+        <div>
+            <div>
                 {Object.keys(columns).map((column) => (
-                    <th
+                    <div
                         key={column}
                         onClick={
                             columns[column].path
@@ -38,10 +38,10 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                     >
                         {columns[column].name}{" "}
                         {rendeSortArrow(selectedSort, columns[column].path)}
-                    </th>
+                    </div>
                 ))}
-            </tr>
-        </thead>
+            </div>
+        </div>
     );
 };
 TableHeader.propTypes = {

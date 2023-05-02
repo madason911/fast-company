@@ -11,3 +11,22 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+.users {
+    display: grid;
+    padding: 20px 0;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.user-card {
+    flex-direction: column;
+    width: 200px;
+    display: flex;
+    background-color: #2d2a2aba;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    justify-content: center;
+    text-align: center;
+}

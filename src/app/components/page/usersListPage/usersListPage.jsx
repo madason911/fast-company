@@ -21,7 +21,7 @@ const UsersListPage = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const pageSize = 8;
+    const pageSize = 12;
 
     const handleDelete = (userId) => {
         console.log("delete user");
@@ -59,6 +59,7 @@ const UsersListPage = () => {
     };
 
     function filterUsers(data) {
+        debugger;
         const filteredUsers = searchQuery
             ? data.filter(
                   (user) =>
@@ -70,7 +71,7 @@ const UsersListPage = () => {
             ? data.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
+                      JSON.stringify(selectedProf._id)
               )
             : data;
         return filteredUsers.filter((u) => u._id !== currentUserId);

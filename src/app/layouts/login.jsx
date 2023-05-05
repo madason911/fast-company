@@ -17,28 +17,28 @@ const Login = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-                <div className="col-md-6 offset-md-3 shadow p-4">
+                <div className="col-md-6 offset-md-3 shadow p-4 auth_form">
                     {formType === "register" ? (
                         <>
-                            <h3 className="mb-4">Register</h3>
+                            <h3 className="mb-4">Регистрация</h3>
                             <RegisterForm />
                             <p>
-                                Already have account?{" "}
+                                Есть аккаунт?{" "}
                                 <a role="button" onClick={toggleFormType}>
                                     {" "}
-                                    Sign In
+                                    Авторизуйтесь
                                 </a>
                             </p>
                         </>
                     ) : (
                         <>
-                            <h3 className="mb-4">Login</h3>
+                            <h3 className="mb-4">Авторизация</h3>
                             <LoginForm />
                             <p>
-                                Dont have account?{" "}
+                                Нет аккаунта?{" "}
                                 <a role="button" onClick={toggleFormType}>
                                     {" "}
-                                    Sign Up
+                                    Зарегистрируйся
                                 </a>
                             </p>
                         </>

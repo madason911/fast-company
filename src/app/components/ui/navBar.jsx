@@ -11,7 +11,7 @@ const NavBar = () => {
                 <ul className="nav">
                     <li className="nav-item">
                         <Link className="nav-link " aria-current="page" to="/">
-                            Main
+                            Главная
                         </Link>
                     </li>
                     {isLoggedIn && (
@@ -19,12 +19,33 @@ const NavBar = () => {
                             <Link
                                 className="nav-link "
                                 aria-current="page"
-                                to="/users"
+                                to="/players"
                             >
-                                Users
+                                Игроки
                             </Link>
                         </li>
                     )}
+                    {isLoggedIn && (
+                        <li className="nav-item">
+                            <Link
+                                className="nav-link "
+                                aria-current="page"
+                                to="/teams"
+                            >
+                                Команды
+                            </Link>
+                        </li>
+                    )}
+                    <li className="nav-item">
+                        <Link className="nav-link " aria-current="page" to="/tournaments">
+                            Турниры
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link " aria-current="page" to="/news">
+                            Новости
+                        </Link>
+                    </li>
                 </ul>
                 <div className="d-flex">
                     {isLoggedIn ? (
@@ -35,7 +56,7 @@ const NavBar = () => {
                             aria-current="page"
                             to="/login"
                         >
-                            Login
+                            Авторизация
                         </Link>
                     )}
                 </div>

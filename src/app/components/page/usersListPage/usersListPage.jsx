@@ -59,7 +59,6 @@ const UsersListPage = () => {
     };
 
     function filterUsers(data) {
-        debugger;
         const filteredUsers = searchQuery
             ? data.filter(
                   (user) =>

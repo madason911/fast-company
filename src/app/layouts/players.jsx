@@ -11,7 +11,7 @@ const Users = () => {
     const { userId, edit } = params;
     const currentUserId = useSelector(getCurrentUserId());
     return (
-        <>
+        <div className="page container bg-opacity-100">
             <UsersLoader>
                 {userId ? (
                     edit ? (
@@ -27,7 +27,7 @@ const Users = () => {
                     <UsersListPage />
                 )}
             </UsersLoader>
-        </>
+        </div>
     );
 };
 

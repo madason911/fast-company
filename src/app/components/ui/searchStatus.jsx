@@ -11,9 +11,12 @@ const SearchStatus = ({ length }) => {
         return "человек готовы сыграть";
     };
     return (
-        <h2>
+        <h2
+            className="mt-5"
+        >
             <span
-                className={"badge " + (length > 0 ? "bg-primary" : "bg-danger")}
+                style={ { color: "#00bbfe" }}
+                className={"badge"}
             >
                 {length > 0
                     ? `${length + " " + renderPhrase(length)}   с тобой сегодня`

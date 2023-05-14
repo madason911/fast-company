@@ -111,6 +111,7 @@ export const signUp =
     async (dispatch) => {
         dispatch(authRequested());
         try {
+            console.log(rest);
             const data = await authService.register({ email, password });
             localStorageService.setTokens(data);
             dispatch(authRequestSuccess({ userId: data.localId }));
@@ -118,7 +119,8 @@ export const signUp =
                 createUser({
                     _id: data.localId,
                     email,
-                    rate: randomInt(1, 5),
+                    role: "Hello",
+                    rate: 3333,
                     completedMeetings: randomInt(0, 200),
                     image: `https://avatars.dicebear.com/api/avataaars/${(
                         Math.random() + 1

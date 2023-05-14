@@ -1,24 +1,122 @@
 import React from "react";
-import useMockData from "../utils/mockData";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+const mainContentStyle = {
+    display: "flex",
+    justifyContent: "space-between"
+};
+
+const mainPageTitle = {
+    textAlign: "center",
+    marginBottom: "75px"
+};
+
+const mainImgStyle = {
+    width: "850px",
+    background: "url('./img/main.png')",
+    backgroundSize: "cover"
+};
+
+const criteriesTitleStyle = {
+    width: "550px"
+};
+
+const authLinksStyle = {
+    display: "flex",
+    justifyContent: "space-around",
+    marginTop: "60px",
+    padding: "0 150px"
+};
+
+const authLinksTextStyle = {
+    fontSize: "32px",
+    fontWeight: 600
+};
+
+const authLinksButtonsStyle = {
+    display: "flex",
+    alignItems: "center",
+    width: "300px",
+    justifyContent: "space-between"
+};
+
+const loginBtnStyle = {
+    background: "#00BBFE",
+    color: "#fff",
+    fontWeight: 500
+};
+
+const registerBtnStyle = {
+    background: "#DC7000",
+    color: "#fff",
+    fontWeight: 500
+};
 
 const Main = () => {
-    const { error, initialize, progress, status } = useMockData();
-    const handleClick = () => {
-        initialize();
-    };
+    const criteries = [
+        "Количество часов",
+        "Текущий ранг",
+        "Пиковый ранг",
+        "Тактическая роль",
+        "Цель от игры",
+        "Страна",
+        "Язык общения",
+        "Часовой пояс",
+        "Время игры",
+        "Возраст",
+        "Турнирный опыт"
+    ];
+
     return (
-        <div className="container mt-5">
-            <h1> Main Page</h1>
-            <h3>Инициализация данных в FireBase</h3>
-            <ul>
-                <li>Status:{status}</li>
-                <li>Progress: {progress}%</li>
-                {error && <li>error: {error}</li>}
-            </ul>
-            <button className="btn btn-primary" onClick={handleClick}>
-                {" "}
-                Инициализировать
-            </button>
+        <div className="main-page">
+            <div className="container mt-5">
+                <h1 style={mainPageTitle}> Пополни ряды чемпионов <br /> со своей командой  </h1>
+                <div style={mainContentStyle}>
+                    <div>
+                        <h2 style={criteriesTitleStyle}>
+                            Критерии при поиске тиммейта <br />
+                            которые озвучили лучшие игроки
+                        </h2>
+                        <ul className="criteries__list">
+                            {
+                                criteries.map((item, index) => {
+                                    return <li key={index}>{item}</li>;
+                                })
+                            }
+                        </ul>
+                    </div>
+                    <div style={mainImgStyle}>
+                    </div>
+                </div>
+                <div
+                    style={authLinksStyle}
+                    className="auth-links"
+                >
+                    <div
+                        style={authLinksTextStyle}
+                        className="auth-links__text"
+                    >
+                        <p>Начни поиск с регистрации</p>
+                    </div>
+                    <div
+                        style={authLinksButtonsStyle}
+                        className="auth-links__buttons"
+                    >
+                        <Link
+                            style={loginBtnStyle}
+                            className="nav-link " aria-current="page" to="/login/login"
+                        >
+                            Авторизация
+                        </Link>
+                        <Link
+                            style={registerBtnStyle}
+                            className="nav-link " aria-current="page" to="/login/register"
+                        >
+                            Регистрация
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

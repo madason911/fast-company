@@ -2,6 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
+const columnStyle = {
+    padding: "0"
+};
+
 const TableBody = ({ data, columns }) => {
     const renderContent = (item, column) => {
         if (columns[column].component) {
@@ -18,7 +22,12 @@ const TableBody = ({ data, columns }) => {
             {data.map((item) => (
                 <div className="user-card" key={item._id}>
                     {Object.keys(columns).map((column) => (
-                        <div key={column}>{renderContent(item, column)}</div>
+                        <div
+                            style={columnStyle}
+                            key={column}
+                        >
+                            {renderContent(item, column)}
+                        </div>
                     ))}
                 </div>
             ))}

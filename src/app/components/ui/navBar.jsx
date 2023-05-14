@@ -3,65 +3,74 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getIsLoggedIn } from "../../store/users";
 import NavProfile from "./navProfile";
+
+const navStyle = {
+    background: "#27273F"
+};
+
 const NavBar = () => {
     const isLoggedIn = useSelector(getIsLoggedIn());
     return (
-        <nav className="navbar bg-light mb-3">
-            <div className="container-fluid">
-                <ul className="nav">
-                    <li className="nav-item">
-                        <Link className="nav-link " aria-current="page" to="/">
-                            Главная
-                        </Link>
-                    </li>
-                    {isLoggedIn && (
+        <div style={navStyle}>
+            <nav
+                className="navbar container mb-3"
+            >
+                <div className="container-fluid">
+                    <ul className="nav">
                         <li className="nav-item">
+                            <Link className="nav-link " aria-current="page" to="/">
+                                Главная
+                            </Link>
+                        </li>
+                        {isLoggedIn && (
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link "
+                                    aria-current="page"
+                                    to="/users"
+                                >
+                                    Игроки
+                                </Link>
+                            </li>
+                        )}
+                        {isLoggedIn && (
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link "
+                                    aria-current="page"
+                                    to="/teams"
+                                >
+                                    Команды
+                                </Link>
+                            </li>
+                        )}
+                        <li className="nav-item">
+                            <Link className="nav-link " aria-current="page" to="/tournaments">
+                                Турниры
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link " aria-current="page" to="/news">
+                                Новости
+                            </Link>
+                        </li>
+                    </ul>
+                    <div className="d-flex">
+                        {isLoggedIn ? (
+                            <NavProfile />
+                        ) : (
                             <Link
                                 className="nav-link "
                                 aria-current="page"
-                                to="/players"
+                                to="/login"
                             >
-                                Игроки
+                                Авторизация
                             </Link>
-                        </li>
-                    )}
-                    {isLoggedIn && (
-                        <li className="nav-item">
-                            <Link
-                                className="nav-link "
-                                aria-current="page"
-                                to="/teams"
-                            >
-                                Команды
-                            </Link>
-                        </li>
-                    )}
-                    <li className="nav-item">
-                        <Link className="nav-link " aria-current="page" to="/tournaments">
-                            Турниры
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link " aria-current="page" to="/news">
-                            Новости
-                        </Link>
-                    </li>
-                </ul>
-                <div className="d-flex">
-                    {isLoggedIn ? (
-                        <NavProfile />
-                    ) : (
-                        <Link
-                            className="nav-link "
-                            aria-current="page"
-                            to="/login"
-                        >
-                            Авторизация
-                        </Link>
-                    )}
+                        )}
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     );
 };
 

@@ -68,8 +68,7 @@ const RegisterForm = () => {
         const isValid = validate();
         if (!isValid) return;
         const newData = {
-            ...data,
-            qualities: data.qualities.map((q) => q.value)
+            ...data
         };
         dispatch(signUp(newData));
     };

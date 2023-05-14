@@ -13,15 +13,20 @@ import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
 import AppLoader from "./components/ui/hoc/appLoader";
 
+const layoutStyle = {
+    background: "#202136",
+    minHeight: "100vh"
+};
+
 function App() {
     return (
-        <div>
+        <div style={layoutStyle}>
             <AppLoader>
                 <NavBar />
 
                 <Switch>
                     <ProtectedRoute
-                        path="/players/:playerId?/:edit?"
+                        path="/users/:userId?/:edit?"
                         component={Players}
                     />
                     <ProtectedRoute

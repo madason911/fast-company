@@ -6,16 +6,12 @@ import {
     getUsersLoadingStatus,
     loadUsersList
 } from "../../../store/users";
-import { loadProfessionsList } from "../../../store/professions";
-import { loadQualitiesList } from "../../../store/qualities";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
     const usersLoadingStatus = useSelector(getUsersLoadingStatus());
     useEffect(() => {
-        dispatch(loadProfessionsList());
-        dispatch(loadQualitiesList());
         if (isLoggedIn) {
             dispatch(loadUsersList());
         }

@@ -2,11 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import avatar from "../../../img/avatar.png";
 
-// import BookMark from "../common/bookmark";
-// import Qualities from "./qualities";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
-// import Profession from "./profession";
+
+const openUserAccStyle = {
+    borderRadius: "0 0 10px 10px",
+    background: "#DC7000",
+    color: "#fff",
+    fontWeight: 500,
+    width: "200px",
+    margin: "auto"
+};
 
 const UserTable = ({
     users,
@@ -64,9 +70,10 @@ const UserTable = ({
             name: "Заявка",
             component: (user) => (
                 <Link
+                    style={openUserAccStyle}
                     className="nav-link mt-5 " aria-current="page" to="/login/register"
                 >
-                    Создать заявку
+                    Открыть игрока
                 </Link>
             )
         }

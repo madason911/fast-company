@@ -32,7 +32,7 @@ const UsersListPage = () => {
     const [searchQuery] = useState("");
     const [selectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const pageSize = 12;
+    const pageSize = 10;
 
     const handleDelete = (userId) => {
         console.log("delete user");

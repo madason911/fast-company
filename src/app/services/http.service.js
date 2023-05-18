@@ -59,7 +59,7 @@ http.interceptors.response.use(
 
         if (!expectedErrors) {
             console.log(error);
-            toast.error("Somthing was wrong. Try it later");
+            toast.error("Что-то пошло не так! Попробуйте позже!");
         }
         return Promise.reject(error);
     }

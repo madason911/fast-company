@@ -3,8 +3,51 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import userService from "../services/user.service";
 import { generateAuthError } from "../utils/generateAuthError";
-import { randomInt } from "../utils/getRandomInt";
 import history from "../utils/history";
+
+const defaultGamesOptions = {
+    cs: {
+        goal: "",
+        maxRate: 0,
+        currRate: 0,
+        currDegree: [],
+        totalTime: 0,
+        role: "",
+        position: "",
+        experience: false,
+        nick: "",
+        steam: "",
+        faceit: "",
+        discord: "",
+        telegramm: ""
+    },
+    dota: {
+        goal: "",
+        maxRate: 0,
+        currRate: 0,
+        totalTime: 0,
+        role: "",
+        position: "",
+        experience: false,
+        nick: "",
+        steam: "",
+        discord: "",
+        telegramm: ""
+    },
+    lol: {
+        goal: "",
+        maxRate: 0,
+        currRate: 0,
+        totalTime: 0,
+        role: "",
+        position: "",
+        experience: false,
+        nick: "",
+        steam: "",
+        discord: "",
+        telegramm: ""
+    }
+};
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -119,9 +162,9 @@ export const signUp =
                 createUser({
                     _id: data.localId,
                     email,
-                    role: "Hello",
-                    rate: 3333,
-                    completedMeetings: randomInt(0, 200),
+                    cs: defaultGamesOptions.cs,
+                    lol: defaultGamesOptions.lol,
+                    dota: defaultGamesOptions.dota,
                     image: `https://avatars.dicebear.com/api/avataaars/${(
                         Math.random() + 1
                     )

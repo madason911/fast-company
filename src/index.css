@@ -31,6 +31,10 @@ code {
     text-align: center;
 }
 
+.profile-card-body {
+    
+}
+
 .users {
     display: grid;
     padding: 20px 0;
@@ -39,15 +43,21 @@ code {
 }
 
 .user-card {
+    position: relative;
     flex-direction: column;
-    width: 200px;
+    width: 100%;
     display: flex;
-    background-color: #111226;
+    background: #111226;
+    border: 2px solid #00BBFE;
     padding: 10px 0 0;
     border-radius: 10px;
     color: #fff;
     justify-content: center;
     text-align: center;
+}
+
+.user-card__option {
+    color: #00BBFE;
 }
 
 .auth_form {

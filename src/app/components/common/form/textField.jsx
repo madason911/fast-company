@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({ label, type, name, value, onChange, error, min, max }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = ({ target }) => {
@@ -19,6 +19,8 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
             <div className="input-group has-validation">
                 <input
                     type={showPassword ? "text" : type}
+                    min={min}
+                    max={max}
                     id={name}
                     name={name}
                     value={value}
@@ -52,6 +54,8 @@ TextField.propTypes = {
     type: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
+    min: PropTypes.string,
+    max: PropTypes.string,
     onChange: PropTypes.func,
     error: PropTypes.string
 };

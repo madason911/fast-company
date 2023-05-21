@@ -20,12 +20,7 @@ const EditUserPage = () => {
         dispatch(
             updateUserData({
                 ...data,
-                completedMeetings: 12312,
-                CS: {
-                    rate: 1000
-                },
-                DOTA: {},
-                LOL: {}
+                completedMeetings: 12312
             })
         );
     };

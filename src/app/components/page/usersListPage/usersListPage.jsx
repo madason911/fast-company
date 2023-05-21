@@ -77,12 +77,6 @@ const UsersListPage = () => {
                           .toLowerCase()
                           .indexOf(searchQuery.toLowerCase()) !== -1
               )
-            : selectedProf
-            ? data.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf._id)
-              )
             : data;
         return filteredUsers.filter((u) => u._id !== currentUserId);
     }

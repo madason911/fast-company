@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Players from "./layouts/players";
 import Teams from "./layouts/teams";
 import Login from "./layouts/login";
+import CardForm from "./layouts/card-form";
 import Main from "./layouts/main";
 import News from "./layouts/news";
 import Tournaments from "./layouts/tournaments";
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/" exact component={Main} />
                     <Route path="/news" exact component={News} />
                     <Route path="/tournaments" exact component={Tournaments} />
+                    <Route path="/card/:type?" component={CardForm} />
                     <Redirect to="/" />
                 </Switch>
             </AppLoader>

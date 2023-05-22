@@ -8,7 +8,7 @@ import TextAreaField from "../common/form/textAreaField";
 
 const goals = [
     { label: "Про игры", value: "aboutGames" },
-    { label: "Развлекательные игры", value: "entertaining" },
+    { label: "Развлекательный", value: "entertaining" },
     { label: "Поднятие рейтинга", value: "rateUp" }
 ];
 
@@ -23,34 +23,27 @@ const roles = [
 ];
 
 const positions = [
-    { label: "Fragger", value: "Fragger" },
-    { label: "Support", value: "Support" },
-    { label: "Awper", value: "Awper" },
-    { label: "Lurker", value: "Lurker" }
+    { label: "Убийца", value: "Убийца" },
+    { label: "Воин", value: "Воин" },
+    { label: "Маг", value: "Маг" },
+    { label: "Стрелок", value: "Стрелок" },
+    { label: "Поддержка", value: "Поддержка" },
+    { label: "Танк", value: "Танк" }
 ];
 
 const ranks = [
-    { label: "Silver I", value: "Silver I" },
-    { label: "Silver II", value: "Silver II" },
-    { label: "Silver III", value: "Silver III" },
-    { label: "Silver IV", value: "Silver IV" },
-    { label: "Silver Elite", value: "Silver Elite" },
-    { label: "Silver Elite Master", value: "Silver Elite Master" },
-    { label: "Gold Nova I", value: "Gold Nova I" },
-    { label: "Gold Nova II", value: "Gold Nova II" },
-    { label: "Gold Nova III", value: "Gold Nova III" },
-    { label: "Gold Nova Master", value: "Gold Nova Master" },
-    { label: "Master Guardian I", value: "Master Guardian I" },
-    { label: "Master Guardian II", value: "Master Guardian II" },
-    { label: "Master Guardian Elite", value: "Master Guardian Elite" },
-    { label: "Distinguished Master Guardian", value: "Distinguished Master Guardian" },
-    { label: "Legendary Eagle", value: "Legendary Eagle" },
-    { label: "Legendary Eagle Master", value: "Legendary Eagle Master" },
-    { label: "Supreme Master First Class", value: "Supreme Master First Class" },
-    { label: "The Global Elite", value: "The Global Elite" }
+    { label: "Iron", value: "Iron" },
+    { label: "Bronze", value: "Bronze" },
+    { label: "Silver", value: "Silver" },
+    { label: "Gold", value: "Gold" },
+    { label: "Platinum", value: "Platinum" },
+    { label: "Diamond", value: "Diamond" },
+    { label: "Master", value: "Master" },
+    { label: "Grandmaster", value: "Grandmaster" },
+    { label: "Challenger", value: "Challenger" }
 ];
 
-const CsForm = () => {
+const LolForm = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUserData());
     const [data, setData] = useState({
@@ -58,12 +51,10 @@ const CsForm = () => {
         nick: "",
         maxRate: "",
         currRate: "",
-        currRank: "",
         totalTime: "",
         role: "",
         position: "",
         experience: "",
-        faceit: "",
         description: ""
     });
     const [errors, setErrors] = useState({});
@@ -87,17 +78,12 @@ const CsForm = () => {
         },
         maxRate: {
             isRequired: {
-                message: "Укажите максимальный ретинг!"
+                message: "Выберите максимальный ретинг!"
             }
         },
         currRate: {
             isRequired: {
-                message: "Укажите текущий ретинг!"
-            }
-        },
-        currRank: {
-            isRequired: {
-                message: "Выберите свой ранг!"
+                message: "Выберите текущий ретинг!"
             }
         },
         totalTime: {
@@ -113,11 +99,6 @@ const CsForm = () => {
         position: {
             isRequired: {
                 message: "Выберите свою позицию в игре!"
-            }
-        },
-        faceit: {
-            isRequired: {
-                message: "Укажите ссылку на FaceIt"
             }
         }
     };
@@ -138,7 +119,7 @@ const CsForm = () => {
         dispatch(
             updateUserData({
                 ...currentUser,
-                cs: { ...data }
+                lol: { ...data }
             })
         );
     };
@@ -160,33 +141,21 @@ const CsForm = () => {
                 onChange={handleChange}
                 error={errors.nick}
             />
-            <TextField
-                label="Максимальный рейтинг"
+            <SelectField
+                options={ranks}
+                label="Максимальный ранг"
                 name="maxRate"
-                type="number"
-                min="0"
-                max="10000"
                 value={data.maxRate}
                 onChange={handleChange}
                 error={errors.maxRate}
             />
-            <TextField
-                label="Текущий рейтинг"
+            <SelectField
+                options={ranks}
+                label="Текущий ранг"
                 name="currRate"
-                type="number"
-                min="0"
-                max="10000"
                 value={data.currRate}
                 onChange={handleChange}
                 error={errors.currRate}
-            />
-            <SelectField
-                options={ranks}
-                label="Текущее звание"
-                name="currRank"
-                value={data.currRank}
-                onChange={handleChange}
-                error={errors.currRank}
             />
             <TextField
                 label="Общее время в игре"
@@ -221,13 +190,6 @@ const CsForm = () => {
                 onChange={handleChange}
                 error={errors.experience}
             />
-            <TextField
-                label="FaceIt"
-                name="faceit"
-                value={data.faceit}
-                onChange={handleChange}
-                error={errors.faceit}
-            />
             <TextAreaField
                 value={data.description || ""}
                 onChange={handleChange}
@@ -245,4 +207,4 @@ const CsForm = () => {
     );
 };
 
-export default CsForm;
+export default LolForm;

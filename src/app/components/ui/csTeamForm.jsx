@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getCurrentUserData, updateUserData } from "../../store/users";
 import { validator } from "../../utils/ validator";
 import { useDispatch, useSelector } from "react-redux";
 import SelectField from "../common/form/selectField";
 import TextField from "../common/form/textField";
 import TextAreaField from "../common/form/textAreaField";
+import { createTeamCard } from "../../store/teams";
+import { nanoid } from "nanoid";
+import { getCurrentUserId } from "../../store/users";
 
 const goals = [
     { label: "Про игры", value: "aboutGames" },
@@ -15,18 +17,6 @@ const goals = [
 const experienceStatuses = [
     { label: "Есть", value: "yes" },
     { label: "Нет", value: "no" }
-];
-
-const roles = [
-    { label: "Командный игрок", value: "player" },
-    { label: "Капитан", value: "leader" }
-];
-
-const positions = [
-    { label: "Fragger", value: "Fragger" },
-    { label: "Support", value: "Support" },
-    { label: "Awper", value: "Awper" },
-    { label: "Lurker", value: "Lurker" }
 ];
 
 const ranks = [
@@ -50,20 +40,17 @@ const ranks = [
     { label: "The Global Elite", value: "The Global Elite" }
 ];
 
-const CsForm = () => {
+const CsTeamForm = () => {
     const dispatch = useDispatch();
-    const currentUser = useSelector(getCurrentUserData());
+    const currentUserId = useSelector(getCurrentUserId());
     const [data, setData] = useState({
         goal: "",
-        nick: "",
+        teamName: "",
         maxRate: "",
-        currRate: "",
-        currRank: "",
+        minRate: "",
+        minRank: "",
         totalTime: "",
-        role: "",
-        position: "",
         experience: "",
-        faceit: "",
         description: ""
     });
     const [errors, setErrors] = useState({});
@@ -80,39 +67,29 @@ const CsForm = () => {
                 message: "Выберите цель игры!"
             }
         },
-        nick: {
+        teamName: {
             isRequired: {
-                message: "Укажите свой ник в игре!"
+                message: "Укажите название команды!"
             }
         },
         maxRate: {
             isRequired: {
-                message: "Укажите максимальный ретинг!"
+                message: "Укажите максимальный рейтинг!"
             }
         },
-        currRate: {
+        minRate: {
             isRequired: {
-                message: "Укажите текущий ретинг!"
+                message: "Укажите минимальный рейтинг!"
             }
         },
-        currRank: {
+        minRank: {
             isRequired: {
-                message: "Выберите свой ранг!"
+                message: "Выберите минимальный ранг!"
             }
         },
         totalTime: {
             isRequired: {
                 message: "Укажите общее время в игре!"
-            }
-        },
-        role: {
-            isRequired: {
-                message: "Выберите свою роль в игре!"
-            }
-        },
-        position: {
-            isRequired: {
-                message: "Выберите свою позицию в игре!"
             }
         },
         faceit: {
@@ -135,12 +112,12 @@ const CsForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        dispatch(
-            updateUserData({
-                ...currentUser,
-                cs: { ...data }
-            })
-        );
+        dispatch(createTeamCard({
+            _id: nanoid(),
+            leader: currentUserId,
+            game: "cs",
+            ...data
+        }));
     };
 
     return (
@@ -154,11 +131,11 @@ const CsForm = () => {
                 error={errors.goal}
             />
             <TextField
-                label="Никнейм в игре"
-                name="nick"
-                value={data.nick}
+                label="Название команды"
+                name="teamName"
+                value={data.teamName}
                 onChange={handleChange}
-                error={errors.nick}
+                error={errors.teamName}
             />
             <TextField
                 label="Максимальный рейтинг"
@@ -171,22 +148,22 @@ const CsForm = () => {
                 error={errors.maxRate}
             />
             <TextField
-                label="Текущий рейтинг"
-                name="currRate"
+                label="Минимальный рейтинг"
+                name="minRate"
                 type="number"
                 min="0"
                 max="10000"
-                value={data.currRate}
+                value={data.minRate}
                 onChange={handleChange}
-                error={errors.currRate}
+                error={errors.minRate}
             />
             <SelectField
                 options={ranks}
-                label="Текущее звание"
-                name="currRank"
-                value={data.currRank}
+                label="Звание"
+                name="minRank"
+                value={data.minRank}
                 onChange={handleChange}
-                error={errors.currRank}
+                error={errors.minRank}
             />
             <TextField
                 label="Общее время в игре"
@@ -198,35 +175,12 @@ const CsForm = () => {
                 error={errors.totalTime}
             />
             <SelectField
-                options={roles}
-                label="Тактическая роль"
-                name="role"
-                value={data.role}
-                onChange={handleChange}
-                error={errors.role}
-            />
-            <SelectField
-                options={positions}
-                label="Позиция в игре"
-                name="position"
-                value={data.position}
-                onChange={handleChange}
-                error={errors.position}
-            />
-            <SelectField
                 options={experienceStatuses}
                 label="Турнирный опыт"
                 name="experience"
                 value={data.experience}
                 onChange={handleChange}
                 error={errors.experience}
-            />
-            <TextField
-                label="FaceIt"
-                name="faceit"
-                value={data.faceit}
-                onChange={handleChange}
-                error={errors.faceit}
             />
             <TextAreaField
                 value={data.description || ""}
@@ -245,4 +199,4 @@ const CsForm = () => {
     );
 };
 
-export default CsForm;
+export default CsTeamForm;

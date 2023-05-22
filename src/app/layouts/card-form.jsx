@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import LoginForm from "../components/ui/loginForm";
 import PlayerCardForm from "../components/ui/playerCardForm";
+import TeamCardForm from "../components/ui/teamCardForm";
 
 const CardForm = () => {
     const { type } = useParams();
@@ -20,7 +20,7 @@ const CardForm = () => {
                     ) : (
                         <>
                             <h3 className="mb-4">Создание карточки команды</h3>
-                            <LoginForm />
+                            <TeamCardForm />
                         </>
                     )}
                 </div>

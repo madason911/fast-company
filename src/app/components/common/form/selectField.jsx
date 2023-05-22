@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+const optionStyle = {
+    background: "rgb(39, 39, 63)"
+};
+
 const SelectField = ({
     label,
     value,
@@ -42,7 +46,7 @@ const SelectField = ({
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (
-                        <option value={option.value} key={option.value}>
+                        <option style={optionStyle} value={option.value} key={option.value}>
                             {option.label}
                         </option>
                     ))}

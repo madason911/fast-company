@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getCurrentUserData, updateUserData } from "../../store/users";
+import { getCurrentUserId } from "../../store/users";
 import { validator } from "../../utils/ validator";
 import { useDispatch, useSelector } from "react-redux";
 import SelectField from "../common/form/selectField";
 import TextField from "../common/form/textField";
 import TextAreaField from "../common/form/textAreaField";
+import { createTeamCard } from "../../store/teams";
+import { nanoid } from "nanoid";
 
 const goals = [
     { label: "Про игры", value: "aboutGames" },
@@ -17,53 +19,16 @@ const experienceStatuses = [
     { label: "Нет", value: "no" }
 ];
 
-const roles = [
-    { label: "Командный игрок", value: "player" },
-    { label: "Капитан", value: "leader" }
-];
-
-const positions = [
-    { label: "Fragger", value: "Fragger" },
-    { label: "Support", value: "Support" },
-    { label: "Awper", value: "Awper" },
-    { label: "Lurker", value: "Lurker" }
-];
-
-const ranks = [
-    { label: "Silver I", value: "Silver I" },
-    { label: "Silver II", value: "Silver II" },
-    { label: "Silver III", value: "Silver III" },
-    { label: "Silver IV", value: "Silver IV" },
-    { label: "Silver Elite", value: "Silver Elite" },
-    { label: "Silver Elite Master", value: "Silver Elite Master" },
-    { label: "Gold Nova I", value: "Gold Nova I" },
-    { label: "Gold Nova II", value: "Gold Nova II" },
-    { label: "Gold Nova III", value: "Gold Nova III" },
-    { label: "Gold Nova Master", value: "Gold Nova Master" },
-    { label: "Master Guardian I", value: "Master Guardian I" },
-    { label: "Master Guardian II", value: "Master Guardian II" },
-    { label: "Master Guardian Elite", value: "Master Guardian Elite" },
-    { label: "Distinguished Master Guardian", value: "Distinguished Master Guardian" },
-    { label: "Legendary Eagle", value: "Legendary Eagle" },
-    { label: "Legendary Eagle Master", value: "Legendary Eagle Master" },
-    { label: "Supreme Master First Class", value: "Supreme Master First Class" },
-    { label: "The Global Elite", value: "The Global Elite" }
-];
-
-const CsForm = () => {
+const DotaTeamForm = () => {
     const dispatch = useDispatch();
-    const currentUser = useSelector(getCurrentUserData());
+    const currentUserId = useSelector(getCurrentUserId());
     const [data, setData] = useState({
         goal: "",
-        nick: "",
+        teamName: "",
         maxRate: "",
-        currRate: "",
-        currRank: "",
+        minRate: "",
         totalTime: "",
-        role: "",
-        position: "",
         experience: "",
-        faceit: "",
         description: ""
     });
     const [errors, setErrors] = useState({});
@@ -80,9 +45,9 @@ const CsForm = () => {
                 message: "Выберите цель игры!"
             }
         },
-        nick: {
+        teamName: {
             isRequired: {
-                message: "Укажите свой ник в игре!"
+                message: "Укажите название команды!"
             }
         },
         maxRate: {
@@ -90,34 +55,14 @@ const CsForm = () => {
                 message: "Укажите максимальный ретинг!"
             }
         },
-        currRate: {
+        minRate: {
             isRequired: {
-                message: "Укажите текущий ретинг!"
-            }
-        },
-        currRank: {
-            isRequired: {
-                message: "Выберите свой ранг!"
+                message: "Укажите минимальный ретинг!"
             }
         },
         totalTime: {
             isRequired: {
                 message: "Укажите общее время в игре!"
-            }
-        },
-        role: {
-            isRequired: {
-                message: "Выберите свою роль в игре!"
-            }
-        },
-        position: {
-            isRequired: {
-                message: "Выберите свою позицию в игре!"
-            }
-        },
-        faceit: {
-            isRequired: {
-                message: "Укажите ссылку на FaceIt"
             }
         }
     };
@@ -136,9 +81,11 @@ const CsForm = () => {
         const isValid = validate();
         if (!isValid) return;
         dispatch(
-            updateUserData({
-                ...currentUser,
-                cs: { ...data }
+            createTeamCard({
+                _id: nanoid(),
+                leader: currentUserId,
+                game: "dota",
+                ...data
             })
         );
     };
@@ -154,11 +101,11 @@ const CsForm = () => {
                 error={errors.goal}
             />
             <TextField
-                label="Никнейм в игре"
-                name="nick"
-                value={data.nick}
+                label="Название команды"
+                name="teamName"
+                value={data.teamName}
                 onChange={handleChange}
-                error={errors.nick}
+                error={errors.teamName}
             />
             <TextField
                 label="Максимальный рейтинг"
@@ -171,22 +118,14 @@ const CsForm = () => {
                 error={errors.maxRate}
             />
             <TextField
-                label="Текущий рейтинг"
-                name="currRate"
+                label="Минимальный рейтинг"
+                name="minRate"
                 type="number"
                 min="0"
                 max="10000"
-                value={data.currRate}
+                value={data.minRate}
                 onChange={handleChange}
-                error={errors.currRate}
-            />
-            <SelectField
-                options={ranks}
-                label="Текущее звание"
-                name="currRank"
-                value={data.currRank}
-                onChange={handleChange}
-                error={errors.currRank}
+                error={errors.minRate}
             />
             <TextField
                 label="Общее время в игре"
@@ -198,35 +137,12 @@ const CsForm = () => {
                 error={errors.totalTime}
             />
             <SelectField
-                options={roles}
-                label="Тактическая роль"
-                name="role"
-                value={data.role}
-                onChange={handleChange}
-                error={errors.role}
-            />
-            <SelectField
-                options={positions}
-                label="Позиция в игре"
-                name="position"
-                value={data.position}
-                onChange={handleChange}
-                error={errors.position}
-            />
-            <SelectField
                 options={experienceStatuses}
                 label="Турнирный опыт"
                 name="experience"
                 value={data.experience}
                 onChange={handleChange}
                 error={errors.experience}
-            />
-            <TextField
-                label="FaceIt"
-                name="faceit"
-                value={data.faceit}
-                onChange={handleChange}
-                error={errors.faceit}
             />
             <TextAreaField
                 value={data.description || ""}
@@ -245,4 +161,4 @@ const CsForm = () => {
     );
 };
 
-export default CsForm;
+export default DotaTeamForm;

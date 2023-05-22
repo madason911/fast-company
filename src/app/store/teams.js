@@ -1,53 +1,10 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import authService from "../services/auth.service";
+// import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
+import teamService from "../services/team.service";
 import userService from "../services/user.service";
-import { generateAuthError } from "../utils/generateAuthError";
+// import { generateAuthError } from "../utils/generateAuthError";
 import history from "../utils/history";
-
-// const defaultGamesOptions = {
-//     cs: {
-//         goal: "",
-//         maxRate: 0,
-//         currRate: 0,
-//         currDegree: [],
-//         totalTime: 0,
-//         role: "",
-//         position: "",
-//         experience: false,
-//         nick: "",
-//         steam: "",
-//         faceit: "",
-//         discord: "",
-//         telegramm: ""
-//     },
-//     dota: {
-//         goal: "",
-//         maxRate: 0,
-//         currRate: 0,
-//         totalTime: 0,
-//         role: "",
-//         position: "",
-//         experience: false,
-//         nick: "",
-//         steam: "",
-//         discord: "",
-//         telegramm: ""
-//     },
-//     lol: {
-//         goal: "",
-//         maxRate: 0,
-//         currRate: 0,
-//         totalTime: 0,
-//         role: "",
-//         position: "",
-//         experience: false,
-//         nick: "",
-//         steam: "",
-//         discord: "",
-//         telegramm: ""
-//     }
-// };
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -68,7 +25,7 @@ const initialState = localStorageService.getAccessToken()
       };
 
 const usersSlice = createSlice({
-    name: "users",
+    name: "teams",
     initialState,
     reducers: {
         usersRequested: (state) => {
@@ -82,31 +39,31 @@ const usersSlice = createSlice({
         usersRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
-        },
-        authRequestSuccess: (state, action) => {
-            state.auth = action.payload;
-            state.isLoggedIn = true;
-        },
-        authRequestFailed: (state, action) => {
-            state.error = action.payload;
-        },
-        userCreated: (state, action) => {
-            state.entities.push(action.payload);
-        },
-        userLoggedOut: (state, action) => {
-            state.entities = null;
-            state.isLoggedIn = false;
-            state.auth = null;
-            state.dataLoaded = false;
-        },
-        userUpdated: (state, action) => {
-            state.entities[
-                state.entities.findIndex((u) => u._id === action.payload._id)
-            ] = action.payload;
-        },
-        authRequested: (state) => {
-            state.error = null;
         }
+        // authRequestSuccess: (state, action) => {
+        //     state.auth = action.payload;
+        //     state.isLoggedIn = true;
+        // },
+        // authRequestFailed: (state, action) => {
+        //     state.error = action.payload;
+        // },
+        // userCreated: (state, action) => {
+        //     state.entities.push(action.payload);
+        // },
+        // userLoggedOut: (state, action) => {
+        //     state.entities = null;
+        //     state.isLoggedIn = false;
+        //     state.auth = null;
+        //     state.dataLoaded = false;
+        // },
+        // userUpdated: (state, action) => {
+        //     state.entities[
+        //         state.entities.findIndex((u) => u._id === action.payload._id)
+        //     ] = action.payload;
+        // },
+        // authRequested: (state) => {
+        //     state.error = null;
+        // }
     }
 });
 
@@ -116,8 +73,8 @@ const {
     usersReceved,
     authRequestFailed,
     usersRequestFailed,
-    authRequestSuccess,
-    userCreated,
+    // authRequestSuccess,
+    // userCreated,
     userLoggedOut,
     userUpdated
 } = actions;
@@ -141,45 +98,34 @@ const userUpdateFailed = createAction("users/userUpdateFailed");
 //     };
 // }
 
-export const login =
-    ({ payload, redirect }) =>
-    async (dispatch) => {
-        const { email, password } = payload;
-        dispatch(authRequested());
-        try {
-            const data = await authService.login({ email, password });
-            dispatch(authRequestSuccess({ userId: data.localId }));
-            localStorageService.setTokens(data);
-            history.push(redirect);
-        } catch (error) {
-            const { code, message } = error.response.data.error;
-            if (code === 400) {
-                const errorMessage = generateAuthError(message);
-                dispatch(authRequestFailed(errorMessage));
-            } else {
-                dispatch(authRequestFailed(error.message));
-            }
-        }
-    };
+// export const login =
+//     ({ payload, redirect }) =>
+//     async (dispatch) => {
+//         const { email, password } = payload;
+//         dispatch(authRequested());
+//         try {
+//             const data = await authService.login({ email, password });
+//             dispatch(authRequestSuccess({ userId: data.localId }));
+//             localStorageService.setTokens(data);
+//             history.push(redirect);
+//         } catch (error) {
+//             const { code, message } = error.response.data.error;
+//             if (code === 400) {
+//                 const errorMessage = generateAuthError(message);
+//                 dispatch(authRequestFailed(errorMessage));
+//             } else {
+//                 dispatch(authRequestFailed(error.message));
+//             }
+//         }
+//     };
 
-export const signUp =
-    ({ email, password, ...rest }) =>
+export const createTeamCard =
+    ({ ...rest }) =>
     async (dispatch) => {
         dispatch(authRequested());
         try {
-            console.log(rest);
-            const data = await authService.register({ email, password });
-            localStorageService.setTokens(data);
-            dispatch(authRequestSuccess({ userId: data.localId }));
             dispatch(
-                createUser({
-                    _id: data.localId,
-                    email,
-                    image: `https://avatars.dicebear.com/api/avataaars/${(
-                        Math.random() + 1
-                    )
-                        .toString(36)
-                        .substring(7)}.svg`,
+                createTeam({
                     ...rest
                 })
             );
@@ -188,12 +134,11 @@ export const signUp =
         }
     };
 
-function createUser(payload) {
+function createTeam(payload) {
     return async function (dispatch) {
         dispatch(userCreateRequested());
         try {
-            const { content } = await userService.create(payload);
-            dispatch(userCreated(content));
+            await teamService.create(payload);
             history.push("/users");
         } catch (error) {
             dispatch(userCreateFailed(error.message));

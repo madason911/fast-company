@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/ validator";
-import CsForm from "./csForm";
 import SelectField from "../common/form/selectField";
-import DotaForm from "./dotaForm";
-import LolForm from "./lolForm";
+import CsTeamForm from "./csTeamForm";
+import DotaTeamForm from "./dotaTeamForm";
+import LolTeamForm from "./lolTeamForm";
 
 const games = [
     { label: "Counter Strike", value: "cs" },
@@ -11,7 +11,7 @@ const games = [
     { label: "League of Legends", value: "lol" }
 ];
 
-const PlayerCardForm = () => {
+const TeamCardForm = () => {
     const [data, setData] = useState({
         game: ""
     });
@@ -51,15 +51,15 @@ const PlayerCardForm = () => {
             />
             {
                 data.game === "cs"
-                ? <CsForm type={"player"} />
+                ? <CsTeamForm />
                 : data.game === "dota"
-                    ? <DotaForm type={"player"} />
+                    ? <DotaTeamForm />
                     : data.game === "lol"
-                        ? <LolForm type={"player"} />
+                        ? <LolTeamForm />
                         : <h2>Выберите игру!</h2>
             }
         </div>
     );
 };
 
-export default PlayerCardForm;
+export default TeamCardForm;

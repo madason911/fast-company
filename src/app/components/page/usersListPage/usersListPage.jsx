@@ -7,6 +7,16 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 import { getCurrentUserId, getUsersCards } from "../../../store/users";
 import PlayerFilters from "../../ui/playerFilters";
+import SearchStatus from "../../ui/searchStatus";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+const openUserAccStyle = {
+    background: "#DC7000",
+    color: "#fff",
+    fontWeight: 500,
+    width: "200px",
+    margin: "auto"
+};
 
 const UsersListPage = () => {
     const users = useSelector(getUsersCards());
@@ -48,6 +58,15 @@ const UsersListPage = () => {
         <div className="d-flex justify-content-center">
             <div className="d-flex flex-column">
                 <h1 className="mt-5">Поиск игроков</h1>
+                <SearchStatus length={count} type={"player"} />
+                <Link
+                    style={openUserAccStyle}
+                    className="nav-link mt-5 mb-5"
+                    aria-current="page"
+                    to={"/users/" + userId}
+                >
+                    Создать заявку
+                </Link>
                 <PlayerFilters />
                 {count > 0 && (
                     <UserTable

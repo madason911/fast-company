@@ -1,5 +1,5 @@
 * {
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 0;
     padding: 0;
 }
@@ -24,13 +24,21 @@ code {
 
 .main-page__img {
     width: "850px";
-    background: url('img/main.png');
-    backgroundSize: "cover"
+    background: url("img/main.png");
+    background-size: "cover";
+}
+
+.layout {
+    height: 100vh;
+    background: url("img/bg.png");
+    background-color: #202136;
+    background-size: cover;
+    overflow: scroll;
 }
 
 .page {
     max-width: 1920px;
-    background: url('img/main.png');
+    background: url("img/main.png");
     background-position: top;
     background-repeat: no-repeat;
     background-size: 800px;
@@ -38,7 +46,6 @@ code {
 }
 
 .profile-card-body {
-    
 }
 
 .users {
@@ -54,7 +61,7 @@ code {
     width: 100%;
     display: flex;
     background: #111226;
-    border: 2px solid #00BBFE;
+    border: 2px solid #00bbfe;
     padding: 10px 0 0;
     border-radius: 10px;
     color: #fff;
@@ -69,7 +76,7 @@ code {
     width: 204px;
     display: flex;
     background: #111226;
-    border: 2px solid #00BBFE;
+    border: 2px solid #00bbfe;
     padding: 10px 0 0;
     border-radius: 10px;
     color: #fff;
@@ -79,16 +86,16 @@ code {
 }
 
 .user-card__option {
-    color: #00BBFE;
+    color: #00bbfe;
 }
 
 .auth_form {
     background: #202136;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 div .text-field {
     background: #202136;
-    border: 2px solid #00BBFE;
+    border: 2px solid #00bbfe;
     color: #ffffff69;
 }

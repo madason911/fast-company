@@ -15,14 +15,15 @@ import LogOut from "./layouts/logOut";
 import AppLoader from "./components/ui/hoc/appLoader";
 import Requests from "./layouts/requests";
 
-const layoutStyle = {
-    background: "#202136",
-    minHeight: "100vh"
-};
+// const layoutStyle = {
+//     background: "#202136",
+//     minHeight: "100vh",
+//     background: "url('img/bg.png')"
+// };
 
 function App() {
     return (
-        <div style={layoutStyle}>
+        <div className="layout">
             <AppLoader>
                 <NavBar />
 

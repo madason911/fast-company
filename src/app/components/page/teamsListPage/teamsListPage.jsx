@@ -7,15 +7,16 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 import { getTeams } from "../../../store/teams";
 import TeamFilters from "../../ui/teamFilters";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import SearchStatus from "../../ui/searchStatus";
 
-// const createRequestBtnStyle = {
-//     background: "#DC7000",
-//     color: "#fff",
-//     fontWeight: 500,
-//     width: "200px",
-//     margin: "auto"
-
-// };
+const openUserAccStyle = {
+    background: "#DC7000",
+    color: "#fff",
+    fontWeight: 500,
+    width: "200px",
+    margin: "auto"
+};
 
 const TeamsListPage = () => {
     const teams = useSelector(getTeams());
@@ -42,6 +43,15 @@ const TeamsListPage = () => {
         <div className="d-flex justify-content-center">
             <div className="d-flex flex-column">
                 <h1 className="mt-5">Поиск команд</h1>
+                <SearchStatus length={count} type={"team"} />
+                <Link
+                    style={openUserAccStyle}
+                    className="nav-link mt-5 mb-5"
+                    aria-current="page"
+                    to={"/users"}
+                >
+                    Создать заявку
+                </Link>
                 <TeamFilters />
                 {count > 0 && (
                     <TeamsTable

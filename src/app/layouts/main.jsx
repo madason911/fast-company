@@ -51,6 +51,14 @@ const registerBtnStyle = {
     fontWeight: 500
 };
 
+const criteriesStyle = {
+    fontWeight: 700,
+    border: "2px solid #02bbfe",
+    background: "#202235",
+    padding: "1rem",
+    borderRadius: "10px"
+};
+
 const Main = () => {
     const criteries = [
         "Количество часов",
@@ -69,30 +77,25 @@ const Main = () => {
     return (
         <div className="main-page">
             <div className="container mt-5">
-                <h1 style={mainPageTitle}> Пополни ряды чемпионов <br /> со своей командой  </h1>
+                <h1 style={mainPageTitle}>
+                    {" "}
+                    Пополни ряды чемпионов <br /> со своей командой{" "}
+                </h1>
                 <div style={mainContentStyle}>
-                    <div>
+                    <div style={criteriesStyle}>
                         <h2 style={criteriesTitleStyle}>
                             Критерии при поиске тиммейта <br />
                             которые озвучили лучшие игроки
                         </h2>
                         <ul className="criteries__list">
-                            {
-                                criteries.map((item, index) => {
-                                    return <li key={index}>{item}</li>;
-                                })
-                            }
+                            {criteries.map((item, index) => {
+                                return <li key={index}>{item}</li>;
+                            })}
                         </ul>
                     </div>
-                    <div
-                        style={mainImgStyle}
-                        className="main-page__img">
-                    </div>
+                    <div style={mainImgStyle} className="main-page__img"></div>
                 </div>
-                <div
-                    style={authLinksStyle}
-                    className="auth-links"
-                >
+                <div style={authLinksStyle} className="auth-links">
                     <div
                         style={authLinksTextStyle}
                         className="auth-links__text"
@@ -105,13 +108,17 @@ const Main = () => {
                     >
                         <Link
                             style={loginBtnStyle}
-                            className="nav-link " aria-current="page" to="/login/login"
+                            className="nav-link "
+                            aria-current="page"
+                            to="/login/login"
                         >
                             Авторизация
                         </Link>
                         <Link
                             style={registerBtnStyle}
-                            className="nav-link " aria-current="page" to="/login/register"
+                            className="nav-link "
+                            aria-current="page"
+                            to="/login/register"
                         >
                             Регистрация
                         </Link>

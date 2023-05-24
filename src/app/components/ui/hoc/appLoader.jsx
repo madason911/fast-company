@@ -6,6 +6,7 @@ import {
     getUsersLoadingStatus,
     loadUsersList
 } from "../../../store/users";
+import { loadTeamsList } from "../../../store/teams";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const AppLoader = ({ children }) => {
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(loadUsersList());
+            dispatch(loadTeamsList());
         }
     }, [isLoggedIn]);
     if (usersLoadingStatus) return "Loading...";

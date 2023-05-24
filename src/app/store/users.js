@@ -223,6 +223,25 @@ export const getCurrentUserData = () => (state) => {
         : null;
 };
 
+export const getUsersCards = () => (state) => {
+    const res = [];
+    if (state.users.entities) {
+        state.users.entities.forEach(user => {
+            if (user.cs) {
+                res.push(user.cs);
+            }
+            if (user.lol) {
+                res.push(user.lol);
+            }
+            if (user.dota) {
+                res.push(user.dota);
+            }
+        });
+    }
+
+    return res;
+};
+
 export const updateUserData = (data) => async (dispatch) => {
     dispatch(userUpdateRequested());
     try {

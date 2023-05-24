@@ -18,71 +18,69 @@ const openUserAccStyle = {
     bottom: 0
 };
 
-const UserTable = ({
+const TeamsTable = ({
     users,
-    userId,
     onSort,
     selectedSort,
-    onToggleBookMark,
     ...rest
 }) => {
     const columns = {
         img: {
             path: "img",
             name: "Фото",
-            component: (user) => (
+            component: (team) => (
                 <img src={avatar} />
             )
         },
         name: {
             path: "name",
             name: "Имя",
-            component: (user) => (
-                <Link to={`/users/${user._id}`}>{user.nick}</Link>
+            component: (team) => (
+                <Link to={`/users/${team._id}`}>{team.teamName}</Link>
             )
         },
         goal: {
             path: "goal",
             name: "Цель",
-            component: (user) => (
-                <span>Цель: {GOALS[user.goal]}</span>
+            component: (team) => (
+                <span>Цель: {GOALS[team.goal]}</span>
             )
         },
         rate: {
             path: "rate",
             name: "Роль",
-            component: (user) => (
-                <span>Текущий рейтинг: {user.currRate}</span>
+            component: (team) => (
+                <span>Текущий рейтинг: {team.currRate}</span>
             )
         },
         role: {
             path: "role",
             name: "Роль",
-            component: (user) => (
-                <span>Роль {ROLES[user.role]}</span>
+            component: (team) => (
+                <span>Роль {ROLES[team.role]}</span>
             )
         },
         country: {
             path: "country",
             name: "Страна",
-            component: (user) => (
+            component: (team) => (
                 <span>Страна: Россия</span>
             )
         },
         time: {
             path: "time",
             name: "Время",
-            component: (user) => (
-                <span>Время: {user.totalTime}ч</span>
+            component: (team) => (
+                <span>Время: {team.totalTime}</span>
             )
         },
         button: {
             path: "button",
             name: "Заявка",
-            component: (user) => (
+            component: (team) => (
                 <Link
                     style={openUserAccStyle}
-                    className="nav-link mt-5 " aria-current="page" to={"/users/" + userId}
+                    className="nav-link mt-5 " aria-current="page" to="/login/register"
                 >
                     Открыть игрока
                 </Link>
@@ -99,12 +97,10 @@ const UserTable = ({
     );
 };
 
-UserTable.propTypes = {
+TeamsTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
-    selectedSort: PropTypes.object.isRequired,
-    onToggleBookMark: PropTypes.func.isRequired,
-    userId: PropTypes.string.isRequired
+    selectedSort: PropTypes.object.isRequired
 };
 
-export default UserTable;
+export default TeamsTable;

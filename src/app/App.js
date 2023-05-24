@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
 import AppLoader from "./components/ui/hoc/appLoader";
+import Requests from "./layouts/requests";
 
 const layoutStyle = {
     background: "#202136",
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/logout" component={LogOut} />
                     <Route path="/" exact component={Main} />
                     <Route path="/news" exact component={News} />
+                    <Route path="/request" exact component={Requests} />
                     <Route path="/tournaments" exact component={Tournaments} />
                     <Route path="/card/:type?" component={CardForm} />
                     <Redirect to="/" />

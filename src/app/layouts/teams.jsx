@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
 import EditUserPage from "../components/page/editUserPage";
+import TeamsListPage from "../components/page/teamsListPage";
 import UserPage from "../components/page/userPage";
-import UsersListPage from "../components/page/usersListPage";
 import UsersLoader from "../components/ui/hoc/usersLoader";
 import { getCurrentUserId } from "../store/users";
 const Users = () => {
@@ -11,7 +11,7 @@ const Users = () => {
     const { userId, edit } = params;
     const currentUserId = useSelector(getCurrentUserId());
     return (
-        <>
+        <div className="page container bg-opacity-100">
             <UsersLoader>
                 {userId ? (
                     edit ? (
@@ -24,10 +24,10 @@ const Users = () => {
                         <UserPage userId={userId} />
                     )
                 ) : (
-                    <UsersListPage />
+                    <TeamsListPage />
                 )}
             </UsersLoader>
-        </>
+        </div>
     );
 };
 

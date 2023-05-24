@@ -28,15 +28,15 @@ const usersSlice = createSlice({
     name: "teams",
     initialState,
     reducers: {
-        usersRequested: (state) => {
+        teamsRequested: (state) => {
             state.isLoading = true;
         },
-        usersReceved: (state, action) => {
+        teamsReceved: (state, action) => {
             state.entities = action.payload;
             state.dataStatus = true;
             state.isLoading = false;
         },
-        usersRequestFailed: (state, action) => {
+        teamsRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         }
@@ -69,23 +69,23 @@ const usersSlice = createSlice({
 
 const { reducer: usersReducer, actions } = usersSlice;
 const {
-    usersRequested,
-    usersReceved,
+    teamsRequested,
+    teamsReceved,
     authRequestFailed,
-    usersRequestFailed,
+    teamsRequestFailed,
     // authRequestSuccess,
     // userCreated,
     userLoggedOut,
     userUpdated
 } = actions;
 
-const authRequested = createAction("users/authRequested");
-const userCreateRequested = createAction("users/userCreateRequested");
-const userCreateFailed = createAction("users/userCreateFailed");
-const userUpdateRequested = createAction("users/userUpdateRequested");
-const userUpdateFailed = createAction("users/userUpdateFailed");
-// const userCardCreateRequested = createAction("users/userCardCreateRequested");
-// const userCardCreateFailed = createAction("users/userCardCreateFailed");
+const authRequested = createAction("teams/authRequested");
+const userCreateRequested = createAction("teams/userCreateRequested");
+const userCreateFailed = createAction("teams/userCreateFailed");
+const userUpdateRequested = createAction("teams/userUpdateRequested");
+const userUpdateFailed = createAction("teams/userUpdateFailed");
+// const userCardCreateRequested = createAction("teams/userCardCreateRequested");
+// const userCardCreateFailed = createAction("teams/userCardCreateFailed");
 
 // function createUserCard(payload) {
 //     return async function (dispatch) {
@@ -139,32 +139,32 @@ function createTeam(payload) {
         dispatch(userCreateRequested());
         try {
             await teamService.create(payload);
-            history.push("/users");
+            history.push("/teams");
         } catch (error) {
             dispatch(userCreateFailed(error.message));
         }
     };
 }
 
-export const loadUsersList = () => async (dispatch, getState) => {
-    dispatch(usersRequested());
+export const loadTeamsList = () => async (dispatch, getState) => {
+    dispatch(teamsRequested());
     try {
-        const { content } = await userService.get();
-        dispatch(usersReceved(content));
+        const { content } = await teamService.get();
+        dispatch(teamsReceved(content));
     } catch (error) {
-        dispatch(usersRequestFailed(error.message));
+        dispatch(teamsRequestFailed(error.message));
     }
 };
 
-export const getUserById = (id) => (state) => {
-    if (state.users.entities) {
-        return state.users.entities.find((u) => u._id === id);
+export const getTeamsForUser = (id) => (state) => {
+    if (state.teams.entities) {
+        return state.teams.entities.filter((u) => u.leader === id);
     }
 };
 
 export const getCurrentUserData = () => (state) => {
-    return state.users.entities
-        ? state.users.entities.find((u) => u._id === state.users.auth.userId)
+    return state.teams.entities
+        ? state.teams.entities.find((u) => u._id === state.teams.auth.userId)
         : null;
 };
 
@@ -173,7 +173,7 @@ export const updateUserData = (data) => async (dispatch) => {
     try {
         const { content } = await userService.update(data);
         dispatch(userUpdated(content));
-        history.push(`/users/${content._id}`);
+        history.push(`/teams/${content._id}`);
     } catch (error) {
         dispatch(userUpdateFailed(error.message));
     }
@@ -185,16 +185,16 @@ export const logOut = () => (dispatch) => {
     history.push("/");
 };
 
-export const getUsers = () => (state) => state.users.entities;
+export const getTeams = () => (state) => state.teams.entities;
 
-export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
+export const getIsLoggedIn = () => (state) => state.teams.isLoggedIn;
 
-export const getDataStatus = () => (state) => state.users.dataStatus;
+export const getDataStatus = () => (state) => state.teams.dataStatus;
 
-export const getCurrentUserId = () => (state) => state.users.auth.userId;
+export const getCurrentUserId = () => (state) => state.teams.auth.userId;
 
-export const getUsersLoadingStatus = () => (state) => state.users.isLoading;
+export const getUsersLoadingStatus = () => (state) => state.teams.isLoading;
 
-export const getAuthErrors = () => (state) => state.users.error;
+export const getAuthErrors = () => (state) => state.teams.error;
 
 export default usersReducer;

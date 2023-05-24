@@ -14,7 +14,7 @@ const Comment = ({
     const user = useSelector(getUserById(userId));
 
     return (
-        <div className="bg-light card-body  mb-3">
+        <div className="user-card p-3 mb-3">
             <div className="row">
                 <div className="col">
                     <div className="d-flex flex-start ">

@@ -22,6 +22,12 @@ code {
     max-width: 1920px;
 }
 
+.main-page__img {
+    width: "850px";
+    background: url('img/main.png');
+    backgroundSize: "cover"
+}
+
 .page {
     max-width: 1920px;
     background: url('img/main.png');
@@ -54,6 +60,22 @@ code {
     color: #fff;
     justify-content: center;
     text-align: center;
+    padding-bottom: 50px;
+}
+
+.player-card {
+    position: relative;
+    flex-direction: column;
+    width: 204px;
+    display: flex;
+    background: #111226;
+    border: 2px solid #00BBFE;
+    padding: 10px 0 0;
+    border-radius: 10px;
+    color: #fff;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 50px;
 }
 
 .user-card__option {
@@ -68,5 +90,5 @@ code {
 div .text-field {
     background: #202136;
     border: 2px solid #00BBFE;
-    color: #fff;
+    color: #ffffff69;
 }

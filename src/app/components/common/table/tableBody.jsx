@@ -20,7 +20,7 @@ const TableBody = ({ data, columns }) => {
     return (
         <div className="users">
             {data.map((item) => (
-                <div className="user-card" key={item._id}>
+                <div className="player-card" key={item._id}>
                     {Object.keys(columns).map((column) => (
                         <div
                             style={columnStyle}

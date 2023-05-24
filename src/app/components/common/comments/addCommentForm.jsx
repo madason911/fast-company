@@ -41,14 +41,13 @@ const AddCommentForm = ({ onSubmit }) => {
     };
 
     return (
-        <div>
-            <h2>New comment</h2>
+        <div className="p-3 pb-0 text-start">
+            <h2>Добавить комментарии</h2>
             <form onSubmit={handleSubmit}>
                 <TextAreaField
                     value={data.content || ""}
                     onChange={handleChange}
                     name="content"
-                    label="Сообщение"
                     error={errors.content}
                 />
                 <div className="d-flex justify-content-end">

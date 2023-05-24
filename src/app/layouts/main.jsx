@@ -13,7 +13,6 @@ const mainPageTitle = {
 
 const mainImgStyle = {
     width: "850px",
-    background: "url('./img/main.png')",
     backgroundSize: "cover"
 };
 
@@ -85,7 +84,9 @@ const Main = () => {
                             }
                         </ul>
                     </div>
-                    <div style={mainImgStyle}>
+                    <div
+                        style={mainImgStyle}
+                        className="main-page__img">
                     </div>
                 </div>
                 <div

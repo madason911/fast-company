@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { getCurrentUserData } from "../../store/users";
+import { getTeamsForUser } from "../../store/teams";
 import GOALS from "../../enums/goals-text";
-import ROLES from "../../enums/roles-text";
 import EXP from "../../enums/experience-text";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const userCardContenStyle = {
     display: "flex",
@@ -19,33 +18,19 @@ const playerCardStyle = {
     textAlign: "left"
 };
 
-const PlayerCard = () => {
+const TeamCard = () => {
     const history = useHistory();
     const currentUser = useSelector(getCurrentUserData());
     const handleClick = () => {
         history.push(history.location.pathname + "/edit");
     };
 
-    const getUserCards = () => {
-        return Object.keys(currentUser).map(key => {
-            if (
-                key === "cs" ||
-                key === "dota" ||
-                key === "lol"
-                ) {
-                    return {
-                        ...currentUser[key],
-                        key
-                    };
-            }
-            return null;
-        }).filter(Boolean);
-    };
+    const teams = useSelector(getTeamsForUser(currentUser._id));
 
     const getGameText = (card) => {
-        if (card.key === "cs") {
+        if (card.game === "cs") {
             return "Counter-Strike";
-        } else if (card.key === "dota") {
+        } else if (card.game === "dota") {
             return "Dota 2";
         }
         return "League of Legends";
@@ -54,8 +39,8 @@ const PlayerCard = () => {
     return (
         <>
             {
-                getUserCards().map(card => (
-                    <div key={card.key} style={playerCardStyle} className="user-card mb-3">
+                teams && teams.map(card => (
+                    <div key={card._id} style={playerCardStyle} className="user-card mb-3">
                         <div className="card-body">
                             <button
                                 className="position-absolute top-0 end-0 btn btn-sm"
@@ -64,7 +49,7 @@ const PlayerCard = () => {
                                 <i className="user-card__option bi bi-gear"></i>
                             </button>
 
-                            <h2>Карточка игрока</h2>
+                            <h2>Карточка Команды</h2>
                             <div style={userCardContenStyle}>
                                 <div className="d-flex flex-column text-left">
                                     <div className="mt-3">
@@ -72,22 +57,21 @@ const PlayerCard = () => {
                                             <p className="mb-0">Игра: {getGameText(card)}</p>
                                             <p className="mb-0">Цель игры: {GOALS[card.goal]}</p>
                                             <p className="mb-0">Максимальный ранг: {card.maxRate}</p>
-                                            <p className="mb-0">Текущий ранг: {card.currRate}</p>
-                                            <p className="mb-0">Текущее звание: {card.currRank}</p>
-                                            <p className="mb-0">Общее время в игре: {card.totalTime}</p>
-                                            <p className="mb-0">Тактическая роль: {ROLES[card.role]}</p>
-                                            <p className="mb-0">Искомая позиция: {card.position}</p>
+                                            <p className="mb-0">Минимальный ранг: {card.minRate}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="d-flex flex-column text-left">
                                     <div className="mt-3">
                                         <div className="user-card__info">
-                                            <p className="mb-0">Турнирный опыт: {EXP[card.experience]}</p>
-                                            <p className="mb-0">Faceit: <Link>https://www.faceit.com/NothingToSay</Link></p>
-                                            <p className="mb-0">Steam: <Link>https://steamcommunity.com/id/NothingToSay</Link></p>
-                                            <p className="mb-0">Discord: #2634 NothingToSay</p>
-                                            <p className="mb-0">Telegramm: @NothingToSay_17</p>
+                                            {
+                                                card.game === "cs"
+                                                    ? <p className="mb-0">Минимальное звание: {card.currRank}</p>
+                                                    : ""
+                                            }
+                                            <p className="mb-0">Общее время в игре: {card.totalTime}</p>
+                                            <p className="mb-0">Количество игроков: 8 {card?.members?.length}</p>
+                                            <p className="mb-0">Турнирный Опыт: {EXP[card.experience]}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -107,8 +91,8 @@ const PlayerCard = () => {
         </>
     );
 };
-PlayerCard.propTypes = {
+TeamCard.propTypes = {
     user: PropTypes.object
 };
 
-export default PlayerCard;
+export default TeamCard;

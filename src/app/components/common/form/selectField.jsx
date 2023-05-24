@@ -5,6 +5,10 @@ const optionStyle = {
     background: "rgb(39, 39, 63)"
 };
 
+const selectStyle = {
+    background: "#202136"
+};
+
 const SelectField = ({
     label,
     value,
@@ -18,7 +22,7 @@ const SelectField = ({
         onChange({ name: target.name, value: target.value });
     };
     const getInputClasses = () => {
-        return "form-select" + (error ? " is-invalid" : "");
+        return "form-select text-field" + (error ? " is-invalid" : "");
     };
 
     const optionsArray =
@@ -35,6 +39,7 @@ const SelectField = ({
                 {label}
             </label>
             <select
+                style={selectStyle}
                 className={getInputClasses()}
                 id="validationCustom04"
                 name={name}

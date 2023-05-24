@@ -5,6 +5,7 @@ import Comments from "../../ui/comments";
 import { useSelector } from "react-redux";
 import { getUserById } from "../../../store/users";
 import PlayerCard from "../../ui/playerCard";
+import TeamCard from "../../ui/teamCard";
 
 const UserPage = ({ userId }) => {
     const user = useSelector(getUserById(userId));
@@ -18,6 +19,7 @@ const UserPage = ({ userId }) => {
                     </div>
                     <div className="col-md-8">
                         <PlayerCard />
+                        <TeamCard />
                         <Comments />
                     </div>
                 </div>

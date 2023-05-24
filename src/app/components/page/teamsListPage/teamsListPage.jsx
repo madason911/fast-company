@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { paginate } from "../../../utils/paginate";
 import Pagination from "../../common/pagination";
-import UserTable from "../../ui/usersTable";
+import TeamsTable from "../../ui/teamsTable";
 import _ from "lodash";
 import { useSelector } from "react-redux";
-import { getCurrentUserId, getUsersCards } from "../../../store/users";
-import PlayerFilters from "../../ui/playerFilters";
+import { getTeams } from "../../../store/teams";
+import TeamFilters from "../../ui/teamFilters";
 
-const UsersListPage = () => {
-    const users = useSelector(getUsersCards());
-    const userId = useSelector(getCurrentUserId());
+// const createRequestBtnStyle = {
+//     background: "#DC7000",
+//     color: "#fff",
+//     fontWeight: 500,
+//     width: "200px",
+//     margin: "auto"
+
+// };
+
+const TeamsListPage = () => {
+    const teams = useSelector(getTeams());
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchQuery] = useState("");
-    const [selectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 10;
-
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [selectedProf, searchQuery]);
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
@@ -29,30 +31,21 @@ const UsersListPage = () => {
     };
 
     function filterUsers(data) {
-        const filteredUsers = searchQuery
-            ? data.filter(
-                  (user) =>
-                      user.name
-                          .toLowerCase()
-                          .indexOf(searchQuery.toLowerCase()) !== -1
-              )
-            : data;
-        return filteredUsers;
+        return data;
     }
-    const filteredUsers = filterUsers(users);
-    const count = filteredUsers.length;
+    const filteredUsers = filterUsers(teams);
+    const count = filteredUsers && filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
-    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+    const teamsCrop = paginate(sortedUsers, currentPage, pageSize);
 
     return (
         <div className="d-flex justify-content-center">
             <div className="d-flex flex-column">
-                <h1 className="mt-5">Поиск игроков</h1>
-                <PlayerFilters />
+                <h1 className="mt-5">Поиск команд</h1>
+                <TeamFilters />
                 {count > 0 && (
-                    <UserTable
-                        userId={userId}
-                        users={usersCrop}
+                    <TeamsTable
+                        users={teamsCrop}
                         onSort={handleSort}
                         selectedSort={sortBy}
                     />
@@ -69,8 +62,8 @@ const UsersListPage = () => {
         </div>
     );
 };
-UsersListPage.propTypes = {
-    users: PropTypes.array
+TeamsListPage.propTypes = {
+    teams: PropTypes.array
 };
 
-export default UsersListPage;
+export default TeamsListPage;

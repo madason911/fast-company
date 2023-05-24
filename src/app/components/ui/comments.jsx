@@ -40,14 +40,14 @@ const Comments = () => {
         <>
             <div className="card mb-2">
                 {" "}
-                <div className="card-body ">
+                <div className="user-card ">
                     <AddCommentForm onSubmit={handleSubmit} />
                 </div>
             </div>
             {sortedComments.length > 0 && (
                 <div className="card mb-3">
-                    <div className="card-body ">
-                        <h2>Comments</h2>
+                    <div className="user-card p-4">
+                        <h2>Комментарии</h2>
                         <hr />
                         {!isLoading ? (
                             <CommentsList

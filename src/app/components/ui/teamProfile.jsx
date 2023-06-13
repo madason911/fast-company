@@ -4,7 +4,7 @@ import GOALS from "../../enums/goals-text";
 import EXP from "../../enums/experience-text";
 import img from "../../../img/avatar.png";
 import { useSelector } from "react-redux";
-import { getCurrentUserId, getUsersCards } from "../../store/users";
+import { getUsersCards } from "../../store/users";
 import UserTable from "./usersTable";
 
 const userCardContenStyle = {
@@ -26,9 +26,9 @@ const imgStyle = {
 
 const TeamProfile = ({ team }) => {
     const users = useSelector(getUsersCards());
-    const currentUserId = useSelector(getCurrentUserId());
+    // const currentUserId = useSelector(getCurrentUserId());
     const slicesUsers = users.filter(
-        (user) => user.owner === currentUserId || user.nick === "Zeus"
+        (user) => user.nick === "Miposhka" || user.nick === "Zeus"
     );
     const getGameText = (card) => {
         if (card.game === "cs") {

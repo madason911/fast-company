@@ -226,15 +226,15 @@ export const getCurrentUserData = () => (state) => {
 export const getUsersCards = () => (state) => {
     const res = [];
     if (state.users.entities) {
-        state.users.entities.forEach(user => {
+        state.users.entities.forEach((user) => {
             if (user.cs) {
-                res.push(user.cs);
+                res.push({ ...user.cs, game: "cs" });
             }
             if (user.lol) {
-                res.push(user.lol);
+                res.push({ ...user.lol, game: "lol" });
             }
             if (user.dota) {
-                res.push(user.dota);
+                res.push({ ...user.dota, game: "dota" });
             }
         });
     }

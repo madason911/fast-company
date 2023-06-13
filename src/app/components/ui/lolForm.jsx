@@ -47,6 +47,8 @@ const LolForm = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUserData());
     const [data, setData] = useState({
+        _id: currentUser._id + "_lol",
+        owner: currentUser._id,
         goal: "",
         nick: "",
         maxRate: "",
@@ -196,7 +198,7 @@ const LolForm = () => {
                 name="description"
                 label="Описание"
             />
-             <button
+            <button
                 type="submit"
                 disabled={!isValid}
                 className="btn btn-primary w-100 mx-auto"

@@ -6,6 +6,8 @@ import ROLES from "../../enums/roles-text";
 
 import Table from "../common/table";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserData, updateUserData } from "../../store/users";
 
 const openUserAccStyle = {
     borderRadius: "0 0 10px 10px",
@@ -18,89 +20,77 @@ const openUserAccStyle = {
     bottom: 0
 };
 
-const TeamsTable = ({
-    users,
-    onSort,
-    selectedSort,
-    ...rest
-}) => {
+const TeamsTable = ({ users, ...rest }) => {
+    const currentUser = useSelector(getCurrentUserData());
+    const dispatch = useDispatch();
+
+    const handleRequest = (data) => {
+        dispatch(
+            updateUserData(data.leader, {
+                requests: {
+                    [currentUser._id]: currentUser._id
+                }
+            })
+        );
+    };
     const columns = {
         img: {
             path: "img",
             name: "Фото",
-            component: (team) => (
-                <img src={avatar} />
-            )
+            component: (team) => <img src={avatar} />
         },
         name: {
             path: "name",
             name: "Имя",
             component: (team) => (
-                <Link to={`/users/${team._id}`}>{team.teamName}</Link>
+                <Link to={`/teams/${team._id}`}>{team.teamName}</Link>
             )
         },
         goal: {
             path: "goal",
             name: "Цель",
-            component: (team) => (
-                <span>Цель: {GOALS[team.goal]}</span>
-            )
+            component: (team) => <span>Цель: {GOALS[team.goal]}</span>
         },
         rate: {
             path: "rate",
             name: "Роль",
-            component: (team) => (
-                <span>Текущий рейтинг: {team.currRate}</span>
-            )
+            component: (team) => <span>Текущий рейтинг: {team.currRate}</span>
         },
         role: {
             path: "role",
             name: "Роль",
-            component: (team) => (
-                <span>Роль {ROLES[team.role]}</span>
-            )
+            component: (team) => <span>Роль {ROLES[team.role]}</span>
         },
         country: {
             path: "country",
             name: "Страна",
-            component: (team) => (
-                <span>Страна: Россия</span>
-            )
+            component: (team) => <span>Страна: Россия</span>
         },
         time: {
             path: "time",
             name: "Время",
-            component: (team) => (
-                <span>Время: {team.totalTime}</span>
-            )
+            component: (team) => <span>Время: {team.totalTime}</span>
         },
         button: {
             path: "button",
             name: "Заявка",
             component: (team) => (
-                <Link
+                <button
                     style={openUserAccStyle}
-                    className="nav-link mt-5 " aria-current="page" to="/login/register"
+                    className="nav-link mt-5 "
+                    aria-current="page"
+                    onClick={() => handleRequest(team)}
                 >
-                    Открыть игрока
-                </Link>
+                    Вступить в команду
+                </button>
             )
         }
     };
-    return (
-        <Table
-            onSort={onSort}
-            selectedSort={selectedSort}
-            columns={columns}
-            data={users}
-        />
-    );
+    return <Table columns={columns} data={users} />;
 };
 
 TeamsTable.propTypes = {
-    users: PropTypes.array.isRequired,
-    onSort: PropTypes.func.isRequired,
-    selectedSort: PropTypes.object.isRequired
+    users: PropTypes.array.isRequired
 };
 
 export default TeamsTable;

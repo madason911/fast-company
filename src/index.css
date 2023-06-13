@@ -83,6 +83,7 @@ code {
     justify-content: center;
     text-align: center;
     padding-bottom: 50px;
+    font-size: 1rem !important;
 }
 
 .user-card__option {
@@ -98,4 +99,10 @@ div .text-field {
     background: #202136;
     border: 2px solid #00bbfe;
     color: #ffffff69;
+}
+
+div .text-field_default {
+    background: #202136;
+    border: 2px solid #00bbfe;
+    color: #ffffff;
 }

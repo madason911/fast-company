@@ -4,12 +4,7 @@ import CsForm from "./csForm";
 import SelectField from "../common/form/selectField";
 import DotaForm from "./dotaForm";
 import LolForm from "./lolForm";
-
-const games = [
-    { label: "Counter Strike", value: "cs" },
-    { label: "Dota 2", value: "dota" },
-    { label: "League of Legends", value: "lol" }
-];
+import games from "../../enums/games";
 
 const PlayerCardForm = () => {
     const [data, setData] = useState({
@@ -49,15 +44,15 @@ const PlayerCardForm = () => {
                 onChange={handleChange}
                 error={errors.game}
             />
-            {
-                data.game === "cs"
-                ? <CsForm type={"player"} />
-                : data.game === "dota"
-                    ? <DotaForm type={"player"} />
-                    : data.game === "lol"
-                        ? <LolForm type={"player"} />
-                        : <h2>Выберите игру!</h2>
-            }
+            {data.game === "cs" ? (
+                <CsForm type={"player"} />
+            ) : data.game === "dota" ? (
+                <DotaForm type={"player"} />
+            ) : data.game === "lol" ? (
+                <LolForm type={"player"} />
+            ) : (
+                <h2>Выберите игру!</h2>
+            )}
         </div>
     );
 };

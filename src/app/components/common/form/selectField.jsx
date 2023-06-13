@@ -22,7 +22,11 @@ const SelectField = ({
         onChange({ name: target.name, value: target.value });
     };
     const getInputClasses = () => {
-        return "form-select text-field" + (error ? " is-invalid" : "");
+        return (
+            "form-select text-field" +
+            (value ? "_default" : "") +
+            (error ? " is-invalid" : "")
+        );
     };
 
     const optionsArray =
@@ -51,7 +55,11 @@ const SelectField = ({
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (
-                        <option style={optionStyle} value={option.value} key={option.value}>
+                        <option
+                            style={optionStyle}
+                            value={option.value}
+                            key={option.value}
+                        >
                             {option.label}
                         </option>
                     ))}

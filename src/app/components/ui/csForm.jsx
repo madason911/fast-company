@@ -43,10 +43,16 @@ const ranks = [
     { label: "Master Guardian I", value: "Master Guardian I" },
     { label: "Master Guardian II", value: "Master Guardian II" },
     { label: "Master Guardian Elite", value: "Master Guardian Elite" },
-    { label: "Distinguished Master Guardian", value: "Distinguished Master Guardian" },
+    {
+        label: "Distinguished Master Guardian",
+        value: "Distinguished Master Guardian"
+    },
     { label: "Legendary Eagle", value: "Legendary Eagle" },
     { label: "Legendary Eagle Master", value: "Legendary Eagle Master" },
-    { label: "Supreme Master First Class", value: "Supreme Master First Class" },
+    {
+        label: "Supreme Master First Class",
+        value: "Supreme Master First Class"
+    },
     { label: "The Global Elite", value: "The Global Elite" }
 ];
 
@@ -54,6 +60,8 @@ const CsForm = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUserData());
     const [data, setData] = useState({
+        _id: currentUser._id + "_cs",
+        owner: currentUser._id,
         goal: "",
         nick: "",
         maxRate: "",
@@ -234,7 +242,7 @@ const CsForm = () => {
                 name="description"
                 label="Описание"
             />
-             <button
+            <button
                 type="submit"
                 disabled={!isValid}
                 className="btn btn-primary w-100 mx-auto"

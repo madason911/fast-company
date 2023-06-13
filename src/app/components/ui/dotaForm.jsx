@@ -34,6 +34,8 @@ const DotaForm = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUserData());
     const [data, setData] = useState({
+        _id: currentUser._id + "_dota",
+        owner: currentUser._id,
         goal: "",
         nick: "",
         maxRate: "",
@@ -187,7 +189,7 @@ const DotaForm = () => {
                 name="description"
                 label="Описание"
             />
-             <button
+            <button
                 type="submit"
                 disabled={!isValid}
                 className="btn btn-primary w-100 mx-auto"

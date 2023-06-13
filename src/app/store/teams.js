@@ -1,7 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import localStorageService from "../services/localStorage.service";
 import teamService from "../services/team.service";
-import userService from "../services/user.service";
 import history from "../utils/history";
 
 const initialState = localStorageService.getAccessToken()
@@ -42,20 +41,12 @@ const usersSlice = createSlice({
 });
 
 const { reducer: usersReducer, actions } = usersSlice;
-const {
-    teamsRequested,
-    teamsReceved,
-    authRequestFailed,
-    teamsRequestFailed,
-    userLoggedOut,
-    userUpdated
-} = actions;
+const { teamsRequested, teamsReceved, authRequestFailed, teamsRequestFailed } =
+    actions;
 
 const authRequested = createAction("teams/authRequested");
 const userCreateRequested = createAction("teams/userCreateRequested");
 const userCreateFailed = createAction("teams/userCreateFailed");
-const userUpdateRequested = createAction("teams/userUpdateRequested");
-const userUpdateFailed = createAction("teams/userUpdateFailed");
 
 export const createTeamCard =
     ({ ...rest }) =>
@@ -97,6 +88,12 @@ export const loadTeamsList = () => async (dispatch, getState) => {
 export const getTeamsForUser = (id) => (state) => {
     if (state.teams.entities) {
         return state.teams.entities.filter((u) => u.leader === id);
+    }
+};
+
+export const getTeamById = (id) => (state) => {
+    if (state.teams.entities) {
+        return state.teams.entities.find((u) => u._id === id);
     }
 };
 

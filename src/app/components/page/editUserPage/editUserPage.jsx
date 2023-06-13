@@ -24,26 +24,6 @@ const EditUserPage = () => {
             })
         );
     };
-    // function getQualitiesListByIds(qualitiesIds) {
-    //     const qualitiesArray = [];
-    //     for (const qualId of qualitiesIds) {
-    //         for (const quality of qualities) {
-    //             if (quality._id === qualId) {
-    //                 qualitiesArray.push(quality);
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     return qualitiesArray;
-    // }
-    // const transformData = (data) => {
-    //     const result = getQualitiesListByIds(data).map((qual) => ({
-    //         label: qual.name,
-    //         value: qual._id
-    //     }));
-
-    //     return result;
-    // };
     useEffect(() => {
         if (currentUser && !data) {
             setData({

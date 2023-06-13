@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { paginate } from "../../../utils/paginate";
 import Pagination from "../../common/pagination";
 import UserTable from "../../ui/usersTable";
-import _ from "lodash";
 import { useSelector } from "react-redux";
 import { getCurrentUserId, getUsersCards } from "../../../store/users";
 import PlayerFilters from "../../ui/playerFilters";
@@ -22,37 +21,130 @@ const UsersListPage = () => {
     const users = useSelector(getUsersCards());
     const userId = useSelector(getCurrentUserId());
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchQuery] = useState("");
-    const [selectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+    const [filters, setFilters] = useState({
+        game: "",
+        goal: "",
+        nick: "",
+        maxRate: "",
+        currRate: "",
+        currRank: "",
+        totalTime: "",
+        role: "",
+        position: "",
+        experience: ""
+    });
     const pageSize = 10;
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf, searchQuery]);
+    }, []);
+
+    useEffect(() => {
+        setFilters({
+            game: filters.game,
+            goal: "",
+            nick: "",
+            maxRate: "",
+            currRate: "",
+            currRank: "",
+            totalTime: "",
+            role: "",
+            position: "",
+            experience: ""
+        });
+    }, [filters.game]);
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
-    const handleSort = (item) => {
-        setSortBy(item);
-    };
 
-    function filterUsers(data) {
-        const filteredUsers = searchQuery
-            ? data.filter(
-                  (user) =>
-                      user.name
-                          .toLowerCase()
-                          .indexOf(searchQuery.toLowerCase()) !== -1
-              )
-            : data;
-        return filteredUsers;
+    function filterUsers() {
+        return filterUsersByNick(
+            filterUsersByExp(
+                filterUsersByRole(
+                    filterUsersByPosition(
+                        filterUsersByCurrRate(
+                            filterUsersByMaxRate(
+                                filterUsersByGoal(filterUsersByGame(users))
+                            )
+                        )
+                    )
+                )
+            )
+        );
     }
+
+    function filterUsersByCurrRate(users) {
+        if (!filters.currRate) {
+            return users;
+        }
+        return users?.filter((user) => {
+            if (user.game === "lol") {
+                return user.currRate === filters.currRate;
+            }
+            return (
+                parseInt(user.currRate, 10) >= parseInt(filters.currRate, 10)
+            );
+        });
+    }
+
+    function filterUsersByMaxRate(users) {
+        if (!filters.maxRate) {
+            return users;
+        }
+        return users?.filter((user) => {
+            if (user.game === "lol") {
+                return user.maxRate === filters.maxRate;
+            }
+            return parseInt(user.maxRate, 10) >= parseInt(filters.maxRate, 10);
+        });
+    }
+
+    function filterUsersByPosition(users) {
+        if (!filters.position) {
+            return users;
+        }
+        return users?.filter((user) => user.position === filters.position);
+    }
+
+    function filterUsersByGame(users) {
+        if (!filters.game) {
+            return users;
+        }
+        return users?.filter((user) => user.game === filters.game);
+    }
+
+    function filterUsersByRole(users) {
+        if (!filters.role) {
+            return users;
+        }
+        return users?.filter((user) => user.role === filters.role);
+    }
+
+    function filterUsersByExp(users) {
+        if (!filters.experience) {
+            return users;
+        }
+        return users?.filter((user) => user.experience === filters.experience);
+    }
+
+    function filterUsersByNick(users) {
+        if (!filters.nick) {
+            return users;
+        }
+        return users?.filter((user) => user.nick.includes(filters.nick));
+    }
+
+    function filterUsersByGoal(users) {
+        if (!filters.goal) {
+            return users;
+        }
+        return users?.filter((user) => user.goal === filters.goal);
+    }
+
     const filteredUsers = filterUsers(users);
     const count = filteredUsers.length;
-    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
-    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+    const usersCrop = paginate(filteredUsers, currentPage, pageSize);
 
     return (
         <div className="d-flex justify-content-center">
@@ -67,15 +159,8 @@ const UsersListPage = () => {
                 >
                     Создать заявку
                 </Link>
-                <PlayerFilters />
-                {count > 0 && (
-                    <UserTable
-                        userId={userId}
-                        users={usersCrop}
-                        onSort={handleSort}
-                        selectedSort={sortBy}
-                    />
-                )}
+                <PlayerFilters filters={filters} setFilters={setFilters} />
+                {count > 0 && <UserTable userId={userId} users={usersCrop} />}
                 <div className="d-flex justify-content-center">
                     <Pagination
                         itemsCount={count}

@@ -52,9 +52,9 @@ const PlayerCard = ({ user }) => {
     };
 
     const getGameText = (user) => {
-        if (user.key === "cs") {
+        if (user.game === "cs") {
             return "Counter-Strike";
-        } else if (user.key === "dota") {
+        } else if (user.game === "dota") {
             return "Dota 2";
         }
         return "League of Legends";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import img from "../../img/avatar.png";
 
 const filterStyle = {
@@ -61,78 +61,56 @@ const requestNumberStyle = {
 };
 
 const Requests = () => {
+    const [requests, setRequests] = useState([
+        // { name: "NothingToSay", time: "42 минут назад" },
+        // { name: "Collapse", time: "40 минут назад" },
+        { name: "Simple", time: "1 минуту назад" }
+    ]);
+
+    const handleClick = () => {
+        setRequests([]);
+    };
     return (
         <div className="container p-4" style={filterStyle}>
             <h1 className="text-center">Заявки на вступление </h1>
-            <div className="user-card mb-3">
-                <div style={cardStyle}>
-                    <div style={requestNumberStyle} className="request-number">
-                        1
+            {requests.length ? (
+                requests.map((request, index) => (
+                    <div key={index} className="user-card mb-3">
+                        <div style={cardStyle}>
+                            <div
+                                style={requestNumberStyle}
+                                className="request-number"
+                            >
+                                {index + 1}
+                            </div>
+                            <img style={imgStyle} src={img}></img>
+                            <div>
+                                <span className="name">{request.name} - </span>
+                                <span className="time mt-3">
+                                    {request.time}
+                                </span>
+                                <p style={requestTextStyle}>
+                                    Желает вступить к вам в команду
+                                </p>
+                            </div>
+                            <div style={btns}>
+                                <button
+                                    onClick={handleClick}
+                                    style={applyBtnStyle}
+                                    className="btn"
+                                >
+                                    Одобрить
+                                </button>
+                                <button style={cancelBtnStyle} className="btn">
+                                    Отклонить
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <img style={imgStyle} src={img}></img>
-                    <div>
-                        <span className="name">NothingToSay - </span>
-                        <span className="time mt-3">42 минут назад</span>
-                        <p style={requestTextStyle}>
-                            Желает вступить к вам в команду
-                        </p>
-                    </div>
-                    <div style={btns}>
-                        <button style={applyBtnStyle} className="btn">
-                            Одобрить
-                        </button>
-                        <button style={cancelBtnStyle} className="btn">
-                            Отклонить
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="user-card mb-3">
-                <div style={cardStyle}>
-                    <div style={requestNumberStyle} className="request-number">
-                        2
-                    </div>
-                    <img style={imgStyle} src={img}></img>
-                    <div>
-                        <span className="name">Collapse - </span>
-                        <span className="time mt-3">40 минут назад</span>
-                        <p style={requestTextStyle}>
-                            Желает вступить к вам в команду
-                        </p>
-                    </div>
-                    <div style={btns}>
-                        <button style={applyBtnStyle} className="btn">
-                            Одобрить
-                        </button>
-                        <button style={cancelBtnStyle} className="btn">
-                            Отклонить
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="user-card mb-3">
-                <div style={cardStyle}>
-                    <div style={requestNumberStyle} className="request-number">
-                        3
-                    </div>
-                    <img style={imgStyle} src={img}></img>
-                    <div>
-                        <span className="name">Simple - </span>
-                        <span className="time mt-3">1 минуту назад</span>
-                        <p style={requestTextStyle}>
-                            Желает вступить к вам в команду
-                        </p>
-                    </div>
-                    <div style={btns}>
-                        <button style={applyBtnStyle} className="btn">
-                            Одобрить
-                        </button>
-                        <button style={cancelBtnStyle} className="btn">
-                            Отклонить
-                        </button>
-                    </div>
-                </div>
-            </div>
+                ))
+            ) : (
+                <h2>Заявка одобрена!</h2>
+            )}
         </div>
     );
 };

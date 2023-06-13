@@ -15,20 +15,20 @@ const menuStyle = {
     width: "max-content"
 };
 
-const alertsCountStyle = {
-    position: "absolute",
-    width: "15px",
-    height: "15px",
-    backgroundColor: "red",
-    top: "-3px",
-    right: "10px",
-    borderRadius: "50%",
-    fontSize: "0.7rem",
-    fontWeight: "900",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-};
+// const alertsCountStyle = {
+//     position: "absolute",
+//     width: "15px",
+//     height: "15px",
+//     backgroundColor: "red",
+//     top: "-3px",
+//     right: "10px",
+//     borderRadius: "50%",
+//     fontSize: "0.7rem",
+//     fontWeight: "900",
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center"
+// };
 
 const NavProfile = () => {
     const currentUser = useSelector(getCurrentUserData());
@@ -44,9 +44,6 @@ const NavProfile = () => {
                     <Link to={`/request`}>
                         <i style={iconStyle} className="bi bi-bell"></i>
                     </Link>
-                    <div style={alertsCountStyle} className="alerts-count">
-                        3
-                    </div>
                 </div>
                 <div className="me-2" onClick={toggleMenu}>
                     {currentUser.name}

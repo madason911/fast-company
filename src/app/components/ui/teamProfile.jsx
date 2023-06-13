@@ -28,7 +28,7 @@ const TeamProfile = ({ team }) => {
     const users = useSelector(getUsersCards());
     const currentUserId = useSelector(getCurrentUserId());
     const slicesUsers = users.filter(
-        (user) => user.owner === currentUserId || user.nick === "Simple"
+        (user) => user.owner === currentUserId || user.nick === "Zeus"
     );
     const getGameText = (card) => {
         if (card.game === "cs") {

@@ -64,7 +64,7 @@ const Requests = () => {
     const [requests, setRequests] = useState([
         // { name: "NothingToSay", time: "42 минут назад" },
         // { name: "Collapse", time: "40 минут назад" },
-        { name: "Simple", time: "1 минуту назад" }
+        { name: "Zeus", time: "1 минуту назад" }
     ]);
 
     const handleClick = () => {

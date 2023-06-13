@@ -4,8 +4,8 @@ import GOALS from "../../enums/goals-text";
 import EXP from "../../enums/experience-text";
 import img from "../../../img/avatar.png";
 import { useSelector } from "react-redux";
-import { getTeams } from "../../store/teams";
-import TeamsTable from "./teamsTable";
+import { getUsersCards } from "../../store/users";
+import UserTable from "./usersTable";
 
 const userCardContenStyle = {
     display: "flex",
@@ -25,7 +25,7 @@ const imgStyle = {
 };
 
 const TeamProfile = ({ team }) => {
-    const teams = useSelector(getTeams());
+    const users = useSelector(getUsersCards());
     const getGameText = (card) => {
         if (card.game === "cs") {
             return "Counter-Strike";
@@ -100,7 +100,7 @@ const TeamProfile = ({ team }) => {
                     ) : (
                         ""
                     )}
-                    <TeamsTable users={teams} />
+                    <UserTable users={users} />
                 </div>
             </div>
         </>

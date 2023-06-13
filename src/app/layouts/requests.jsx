@@ -62,10 +62,7 @@ const requestNumberStyle = {
 
 const Requests = () => {
     return (
-        <div
-            className="container p-4"
-            style={filterStyle}
-        >
+        <div className="container p-4" style={filterStyle}>
             <h1 className="text-center">Заявки на вступление </h1>
             <div className="user-card mb-3">
                 <div style={cardStyle}>
@@ -75,20 +72,16 @@ const Requests = () => {
                     <img style={imgStyle} src={img}></img>
                     <div>
                         <span className="name">NothingToSay - </span>
-                        <span className="time mt-3">15 минут назад</span>
-                        <p style={requestTextStyle}>Желает вступить к вам в команду</p>
+                        <span className="time mt-3">42 минут назад</span>
+                        <p style={requestTextStyle}>
+                            Желает вступить к вам в команду
+                        </p>
                     </div>
                     <div style={btns}>
-                        <button
-                            style={applyBtnStyle}
-                            className="btn"
-                        >
+                        <button style={applyBtnStyle} className="btn">
                             Одобрить
                         </button>
-                        <button
-                            style={cancelBtnStyle}
-                            className="btn"
-                        >
+                        <button style={cancelBtnStyle} className="btn">
                             Отклонить
                         </button>
                     </div>
@@ -102,20 +95,16 @@ const Requests = () => {
                     <img style={imgStyle} src={img}></img>
                     <div>
                         <span className="name">Collapse - </span>
-                        <span className="time mt-3">15 минут назад</span>
-                        <p style={requestTextStyle}>Желает вступить к вам в команду</p>
+                        <span className="time mt-3">40 минут назад</span>
+                        <p style={requestTextStyle}>
+                            Желает вступить к вам в команду
+                        </p>
                     </div>
                     <div style={btns}>
-                        <button
-                            style={applyBtnStyle}
-                            className="btn"
-                        >
+                        <button style={applyBtnStyle} className="btn">
                             Одобрить
                         </button>
-                        <button
-                            style={cancelBtnStyle}
-                            className="btn"
-                        >
+                        <button style={cancelBtnStyle} className="btn">
                             Отклонить
                         </button>
                     </div>
@@ -129,20 +118,16 @@ const Requests = () => {
                     <img style={imgStyle} src={img}></img>
                     <div>
                         <span className="name">Simple - </span>
-                        <span className="time mt-3">15 минут назад</span>
-                        <p style={requestTextStyle}>Желает вступить к вам в команду</p>
+                        <span className="time mt-3">1 минуту назад</span>
+                        <p style={requestTextStyle}>
+                            Желает вступить к вам в команду
+                        </p>
                     </div>
                     <div style={btns}>
-                        <button
-                            style={applyBtnStyle}
-                            className="btn"
-                        >
+                        <button style={applyBtnStyle} className="btn">
                             Одобрить
                         </button>
-                        <button
-                            style={cancelBtnStyle}
-                            className="btn"
-                        >
+                        <button style={cancelBtnStyle} className="btn">
                             Отклонить
                         </button>
                     </div>

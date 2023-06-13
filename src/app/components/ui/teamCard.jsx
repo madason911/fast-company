@@ -38,9 +38,13 @@ const TeamCard = () => {
 
     return (
         <>
-            {
-                teams && teams.map(card => (
-                    <div key={card._id} style={playerCardStyle} className="user-card mb-3">
+            {teams &&
+                teams.map((card) => (
+                    <div
+                        key={card._id}
+                        style={playerCardStyle}
+                        className="user-card mb-3"
+                    >
                         <div className="card-body">
                             <button
                                 className="position-absolute top-0 end-0 btn btn-sm"
@@ -54,40 +58,56 @@ const TeamCard = () => {
                                 <div className="d-flex flex-column text-left">
                                     <div className="mt-3">
                                         <div className="user-card__info">
-                                            <p className="mb-0">Игра: {getGameText(card)}</p>
-                                            <p className="mb-0">Цель игры: {GOALS[card.goal]}</p>
-                                            <p className="mb-0">Максимальный ранг: {card.maxRate}</p>
-                                            <p className="mb-0">Минимальный ранг: {card.minRate}</p>
+                                            <p className="mb-0">
+                                                Игра: {getGameText(card)}
+                                            </p>
+                                            <p className="mb-0">
+                                                Цель игры: {GOALS[card.goal]}
+                                            </p>
+                                            <p className="mb-0">
+                                                Максимальный ранг:{" "}
+                                                {card.maxRate}
+                                            </p>
+                                            <p className="mb-0">
+                                                Минимальный ранг: {card.minRate}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="d-flex flex-column text-left">
                                     <div className="mt-3">
                                         <div className="user-card__info">
-                                            {
-                                                card.game === "cs"
-                                                    ? <p className="mb-0">Минимальное звание: {card.currRank}</p>
-                                                    : ""
-                                            }
-                                            <p className="mb-0">Общее время в игре: {card.totalTime}</p>
-                                            <p className="mb-0">Количество игроков: 8 {card?.members?.length}</p>
-                                            <p className="mb-0">Турнирный Опыт: {EXP[card.experience]}</p>
+                                            {card.game === "cs" ? (
+                                                <p className="mb-0">
+                                                    Минимальное звание:{" "}
+                                                    {card.currRank}
+                                                </p>
+                                            ) : (
+                                                ""
+                                            )}
+                                            <p className="mb-0">
+                                                Общее время в игре:{" "}
+                                                {card.totalTime}
+                                            </p>
+                                            <p className="mb-0">
+                                                Турнирный Опыт:{" "}
+                                                {EXP[card.experience]}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {
-                                card.description
-                                    ? <div className="mt-3">
-                                        <span>Описание</span>
-                                        <p>{card.description}</p>
-                                    </div>
-                                    : ""
-                            }
+                            {card.description ? (
+                                <div className="mt-3">
+                                    <span>Описание</span>
+                                    <p>{card.description}</p>
+                                </div>
+                            ) : (
+                                ""
+                            )}
                         </div>
                     </div>
-                ))
-            }
+                ))}
         </>
     );
 };

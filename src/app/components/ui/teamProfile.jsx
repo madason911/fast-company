@@ -86,10 +86,6 @@ const TeamProfile = ({ team }) => {
                                         Общее время в игре: {team.totalTime}
                                     </p>
                                     <p className="mb-0">
-                                        Количество игроков: 8{" "}
-                                        {team?.members?.length}
-                                    </p>
-                                    <p className="mb-0">
                                         Турнирный Опыт: {EXP[team.experience]}
                                     </p>
                                 </div>
